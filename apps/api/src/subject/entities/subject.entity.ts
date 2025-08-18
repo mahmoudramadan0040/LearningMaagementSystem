@@ -42,18 +42,18 @@ export class Subject extends Model<Subject> {
   subject_code: string;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   level: Number;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   MaxScore: Number;
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   MinScore: Number;
@@ -65,35 +65,35 @@ export class Subject extends Model<Subject> {
   IsAddedToTotal: Boolean;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   final_min_score: Number;
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   final_max_score: Number;
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   course_work_score: Number;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   summer_final_min_score: Number;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   Summer_final_max_score: Number;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   summer_course_work_score: Number;
@@ -116,7 +116,7 @@ export class Subject extends Model<Subject> {
   // Foreign key
   @ForeignKey(() => Department)
   @Column({
-    type: DataType.UUIDV4,
+    type: DataType.UUID,
     allowNull: false,
   })
   departmentId: string;

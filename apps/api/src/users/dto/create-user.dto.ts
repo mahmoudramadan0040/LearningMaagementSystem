@@ -6,10 +6,13 @@ import {
   IsPhoneNumber,
   ValidateIf,
   IsUUID,
+  IsBoolean,
+  IsNumber,
 } from 'class-validator';
 
 import { UserRole } from '../entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
+
 
 export class CreateUserDto {
   @ApiProperty()
@@ -44,6 +47,7 @@ export class CreateUserDto {
   @ApiProperty({ enum: UserRole })
   @IsEnum(UserRole)
   role: UserRole;
+
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
@@ -51,13 +55,16 @@ export class CreateUserDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
+  @IsNumber()
   level?: number;
 
   @ApiProperty({ required: false })
   @IsOptional()
+  @IsBoolean()
   Graduated?: boolean;
 
-  @ApiProperty()
-  @IsUUID()
-  departmentId: string;
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  departmentId?: string;
 }

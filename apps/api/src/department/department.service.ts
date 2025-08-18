@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
-
+import { Department } from './entities/department.entity';
+import { InjectModel } from '@nestjs/sequelize';
 @Injectable()
 export class DepartmentService {
-  create(createDepartmentDto: CreateDepartmentDto) {
-    return 'This action adds a new department';
+  constructor(
+    @InjectModel(Department)
+    private readonly DepartmentRepo: typeof Department,
+  ) {}
+
+  async create(createDepartmentDto: CreateDepartmentDto) {
+    return this.DepartmentRepo.create(createDepartmentDto as any);
   }
 
-  findAll() {
-    return `This action returns all department`;
+  async findAll() {
+    return this.DepartmentRepo.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} department`;
+  async findOne(id: string) {
+    return this.DepartmentRepo.findByPk(id);
   }
 
-  update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
-    return `This action updates a #${id} department`;
+  async update(id: string, updateDepartmentDto: UpdateDepartmentDto) {
+    const department = await this.DepartmentRepo.findByPk(id);
+    if (!department) {
+      throw new NotFoundException(`Department with ID "${id}" not found!`);
+    }
+    return await department.update(updateDepartmentDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} department`;
+  async remove(id: string) {
+    const department = await this.DepartmentRepo.findByPk(id);
+     if (!department) {
+      throw new NotFoundException(`Department with ID "${id}" not found!`);
+    }
+
+    return await department.destroy();
   }
 }

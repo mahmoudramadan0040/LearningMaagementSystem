@@ -81,10 +81,10 @@ export class User extends Model<User> {
   level_status: string;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     allowNull: true,
   })
-  level: Number;
+  level:Number;
 
   @Column({
     type: DataType.BOOLEAN,
@@ -96,7 +96,7 @@ export class User extends Model<User> {
   @Column({
     type: DataType.STRING(9),
     unique: true,
-    allowNull: false,
+    allowNull: true,
   })
   unique_id: string;
   @BeforeCreate
@@ -126,7 +126,7 @@ export class User extends Model<User> {
   // Foreign key
   @ForeignKey(() => Department)
   @Column({
-    type: DataType.UUIDV4,
+    type: DataType.UUID,
     allowNull: true,
   })
   departmentId: string;

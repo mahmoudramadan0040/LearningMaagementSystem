@@ -33,14 +33,14 @@ export class Grade extends Model<Grade> {
   grade: string;
 
   @ForeignKey(() => User)
-  @Column
+  @Column(DataType.UUID)  
   userId: string;
 
   @BelongsTo(() => User)
   user: User;
 
   @ForeignKey(() => Subject)
-  @Column
+  @Column(DataType.UUID)  
   subjectId: string;
 
   @BelongsTo(() => Subject)
