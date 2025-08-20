@@ -73,7 +73,7 @@ export class UsersController {
   @ApiParam({ name: 'id', type: String })
   @HttpCode(200)
   async update(
-    @Param('id') id: string,
+    @Param('id',new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateUserDto: Partial<CreateUserDto>,
   ): Promise<User> {
     return await this.usersService.update(id, updateUserDto);
@@ -83,7 +83,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Delete a user by ID' })
   @ApiParam({ name: 'id', type: String })
   @HttpCode(204)
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id',new ParseUUIDPipe({ version: '4' })) id: string) {
     const deleted = await this.usersService.remove(id);
     if (!deleted) {
       throw new NotFoundException(`User with ID "${id}" not found`);

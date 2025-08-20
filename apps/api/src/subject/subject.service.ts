@@ -1,26 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
+import { Subject } from './entities/subject.entity';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class SubjectService {
-  create(createSubjectDto: CreateSubjectDto) {
-    return 'This action adds a new subject';
+  constructor(
+    @InjectModel(Subject)
+    private readonly subjectRepository: typeof Subject,
+  ) {}
+  async create(createSubjectDto: CreateSubjectDto): Promise<Subject> {
+    return await this.subjectRepository.create(createSubjectDto as any);
   }
 
-  findAll() {
-    return `This action returns all subject`;
+  async findAll(): Promise<Subject[]> {
+    return await this.subjectRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subject`;
+  async findOne(id: string): Promise<Subject> {
+    const subject = await this.subjectRepository.findByPk(id);
+    if (!subject)
+      throw new NotFoundException(`Subject with ID "${id}" not found`);
+    return subject;
   }
 
-  update(id: number, updateSubjectDto: UpdateSubjectDto) {
+  update(id: string, updateSubjectDto: UpdateSubjectDto) {
     return `This action updates a #${id} subject`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} subject`;
   }
 }

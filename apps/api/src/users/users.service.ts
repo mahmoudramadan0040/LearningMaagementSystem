@@ -32,7 +32,7 @@ export class UsersService {
     };
   }
 
-  async findOne(id: string): Promise<User | null> {
+  async findOne(id: string): Promise<User | null > {
     return await this.userRepository.findByPk(id, {
       include: { all: true },
     });

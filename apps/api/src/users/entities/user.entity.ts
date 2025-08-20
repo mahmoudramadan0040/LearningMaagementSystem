@@ -25,6 +25,7 @@ export enum UserRole {
   timestamps:true
 })
 export class User extends Model<User> {
+ 
   @PrimaryKey
   @Default(DataType.UUIDV4) // ✅ auto-generate UUID
   @Column({
@@ -96,14 +97,12 @@ export class User extends Model<User> {
   @Column({
     type: DataType.STRING(9),
     unique: true,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: async () => await User.generateTimeBasedId(),
   })
   unique_id: string;
-  @BeforeCreate
-  static async generateUniqueId(instance: User) {
-    instance.unique_id = await User.generateTimeBasedId();
-  }
-  private static async generateTimeBasedId(): Promise<string> {
+
+  static async generateTimeBasedId(): Promise<string> {
     let id: string;
     let exists: User | null;
 

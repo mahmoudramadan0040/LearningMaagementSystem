@@ -63,8 +63,8 @@ export class CreateUserDto {
   @IsBoolean()
   Graduated?: boolean;
 
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
-  departmentId?: string;
+  // @ApiProperty({ required: false })
+  // @IsOptional()
+  // @IsString()
+  // departmentId?: string;
 }
