@@ -7,6 +7,7 @@ import { SubjectModule } from './subject/subject.module';
 import { GradeModule } from './grade/grade.module';
 import { DatabaseModule } from './database/database.module';
 import { UserSubjectModule } from './user-subject/user-subject.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { UserSubjectModule } from './user-subject/user-subject.module';
     DepartmentModule, 
     SubjectModule, 
     GradeModule, 
-    DatabaseModule, UserSubjectModule
+    DatabaseModule, UserSubjectModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

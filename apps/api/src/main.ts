@@ -6,8 +6,6 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import fastifySwagger from '@fastify/swagger';
-import fastifySwaggerUi from '@fastify/swagger-ui';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
