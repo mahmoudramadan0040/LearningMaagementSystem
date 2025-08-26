@@ -2,12 +2,9 @@ import {
   IsString,
   IsOptional,
   IsEnum,
-  IsNotEmpty,
-  IsPhoneNumber,
-  ValidateIf,
-  IsUUID,
   IsBoolean,
   IsNumber,
+  MinLength,
 } from 'class-validator';
 
 import { UserRole } from '../entities/user.entity';
@@ -23,6 +20,20 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   student_id?: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  @MinLength(6)
+  password?: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  username?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  email?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

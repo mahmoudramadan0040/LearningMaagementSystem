@@ -9,6 +9,7 @@ import {
   ForeignKey,
   BelongsTo,
   BelongsToMany,
+  AllowNull,
 } from 'sequelize-typescript';
 import { Department } from 'src/department/entities/department.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
@@ -18,14 +19,14 @@ export enum UserRole {
   STUDENT = 'Student',
   TEACHER = 'Teacher',
   ADMIN = 'Admin',
+  MANAGER = 'Manager',
 }
 
 @Table({
   tableName: 'users',
-  timestamps:true
+  timestamps: true,
 })
 export class User extends Model<User> {
- 
   @PrimaryKey
   @Default(DataType.UUIDV4) // ✅ auto-generate UUID
   @Column({
@@ -38,7 +39,21 @@ export class User extends Model<User> {
     allowNull: false,
   })
   name: string;
-
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  email: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  username: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  password: string;
   @Column({
     type: DataType.STRING,
     allowNull: true,
@@ -69,11 +84,18 @@ export class User extends Model<User> {
   })
   national_id: string;
 
+  @Default(UserRole.STUDENT)
   @Column({
     type: DataType.ENUM(...Object.values(UserRole)),
     allowNull: false,
   })
   role: UserRole;
+
+  @Column({
+    allowNull: true,
+    type: DataType.STRING,
+  })
+  refreshToken?: string;
 
   @Column({
     type: DataType.STRING,
@@ -85,7 +107,7 @@ export class User extends Model<User> {
     type: DataType.INTEGER,
     allowNull: true,
   })
-  level:Number;
+  level: Number;
 
   @Column({
     type: DataType.BOOLEAN,
@@ -97,8 +119,7 @@ export class User extends Model<User> {
   @Column({
     type: DataType.STRING(9),
     unique: true,
-    allowNull: false,
-    defaultValue: async () => await User.generateTimeBasedId(),
+    allowNull: true,
   })
   unique_id: string;
 
@@ -118,10 +139,11 @@ export class User extends Model<User> {
 
     return id;
   }
-
-
-
-  // relation between user and department 
+  @BeforeCreate
+  static async generateUniqueId(instance: User) {
+    instance.unique_id = await User.generateTimeBasedId();
+  }
+  // relation between user and department
   // Foreign key
   @ForeignKey(() => Department)
   @Column({
@@ -129,7 +151,6 @@ export class User extends Model<User> {
     allowNull: true,
   })
   departmentId: string;
-
 
   // Relation
   @BelongsTo(() => Department)
