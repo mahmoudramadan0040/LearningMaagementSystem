@@ -9,6 +9,7 @@ import { DatabaseModule } from './database/database.module';
 import { UserSubjectModule } from './user-subject/user-subject.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { FileManagementModule } from './file_management/file_management.module';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
     DepartmentModule, 
     SubjectModule, 
     GradeModule, 
-    DatabaseModule, UserSubjectModule, AuthModule
+    DatabaseModule, UserSubjectModule, AuthModule, FileManagementModule
   ],
   controllers: [AppController],
   providers: [AppService],
