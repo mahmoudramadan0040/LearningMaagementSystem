@@ -6,6 +6,7 @@ import { Subject } from 'src/subject/entities/subject.entity';
 import { Department } from 'src/department/entities/department.entity';
 import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
 import { Grade } from 'src/grade/entities/grade.entity';
+import { FileManagement } from 'src/file_management/entities/file_management.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { Grade } from 'src/grade/entities/grade.entity';
         username: config.get<string>('DB_USER'),
         password: config.get<string>('DB_PASS'),
         database: config.get<string>('DB_NAME'),
-        models: [User,Department,UserSubject,Subject,Grade],
+        models: [User,Department,UserSubject,Subject,Grade,FileManagement],
         autoLoadModels: true,
         synchronize: true,
         sync: { force: true } 

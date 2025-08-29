@@ -10,8 +10,10 @@ import {
   BelongsTo,
   BelongsToMany,
   AllowNull,
+  HasOne,
 } from 'sequelize-typescript';
 import { Department } from 'src/department/entities/department.entity';
+import { FileManagement } from 'src/file_management/entities/file_management.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
 
@@ -158,4 +160,9 @@ export class User extends Model<User> {
 
   @BelongsToMany(() => Subject, () => UserSubject)
   subjects: Subject[];
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  profileImage: string | null;
+
+
 }

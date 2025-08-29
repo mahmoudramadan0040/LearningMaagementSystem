@@ -1,5 +1,10 @@
-import { Column, DataType, PrimaryKey, Default, Model } from 'sequelize-typescript';
+import { Column, DataType, PrimaryKey, Default, Model, Table, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { User } from 'src/users/entities/user.entity';
 
+@Table({
+  tableName: 'file-managment',
+  timestamps: true,
+})
 export class FileManagement  extends Model<FileManagement> {
   @PrimaryKey
   @Default(DataType.UUIDV4) // ✅ auto-generate UUID
@@ -31,4 +36,13 @@ export class FileManagement  extends Model<FileManagement> {
      allowNull: true,
   })
   url: string;
+
+  // make relationship between user and files 
+  @ForeignKey(() => User)
+  @Column(DataType.UUID)
+  userId: string;
+
+  @BelongsTo(() => User)
+  user: User;
+
 }
