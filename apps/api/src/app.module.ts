@@ -10,6 +10,7 @@ import { UserSubjectModule } from './user-subject/user-subject.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { FileManagementModule } from './file_management/file_management.module';
+import { SubjectMaterialsModule } from './subject_materials/subject_materials.module';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { FileManagementModule } from './file_management/file_management.module';
     DepartmentModule, 
     SubjectModule, 
     GradeModule, 
-    DatabaseModule, UserSubjectModule, AuthModule, FileManagementModule
+    DatabaseModule, UserSubjectModule, AuthModule, FileManagementModule, SubjectMaterialsModule
   ],
   controllers: [AppController],
   providers: [AppService],

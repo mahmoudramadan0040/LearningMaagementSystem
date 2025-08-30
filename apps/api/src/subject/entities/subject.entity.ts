@@ -8,8 +8,10 @@ import {
   ForeignKey,
   BelongsTo,
   BelongsToMany,
+  HasOne,
 } from 'sequelize-typescript';
 import { Department } from 'src/department/entities/department.entity';
+import { SubjectMaterial } from 'src/subject_materials/entities/subject_material.entity';
 import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
 import { User } from 'src/users/entities/user.entity';
 
@@ -129,4 +131,7 @@ export class Subject extends Model<Subject> {
   // Many-to-Many relation with User
   @BelongsToMany(() => User, () => UserSubject)
   users: User[];
+
+  @HasOne(() => SubjectMaterial)
+  material: SubjectMaterial;
 }

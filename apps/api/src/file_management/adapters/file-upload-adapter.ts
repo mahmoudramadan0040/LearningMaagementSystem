@@ -4,7 +4,15 @@ import { UploadedFile } from '../interface/UploadFile.interface';
 @Injectable()
 export class FileUploadAdapterImpl implements FileUploadAdapter {
   async getFile(req: any): Promise<UploadedFile | null> {
-    
+    if (req.file) {
+      // Express (Multer)
+      return {
+        buffer: req.file.buffer,
+        originalName: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+      };
+    }
 
     if (req.file && typeof req.file === 'function') {
       // Fastify (fastify-multipart)
@@ -21,15 +29,6 @@ export class FileUploadAdapterImpl implements FileUploadAdapter {
           };
         }
       }
-    }
-    if (req.file) {
-      // Express (Multer)
-      return {
-        buffer: req.file.buffer,
-        originalName: req.file.originalname,
-        mimetype: req.file.mimetype,
-        size: req.file.size,
-      };
     }
 
     

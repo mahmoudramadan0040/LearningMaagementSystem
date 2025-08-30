@@ -1,0 +1,18 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.next": true,
+    "**/.turbo": true,
+    "**/frontend":true,
+    "**/dashboard":true,
+    "**/api/**/*.spec.ts":true,
+    "**/api/test":true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.turbo": true
+  },
+  "typescript.tsserver.maxTsServerMemory": 4096
+}
