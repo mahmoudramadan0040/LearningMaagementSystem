@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { FileManagementModule } from './file_management/file_management.module';
 import { SubjectMaterialsModule } from './subject_materials/subject_materials.module';
+import { SubjectRoleModule } from './subject_role/subject_role.module';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { SubjectMaterialsModule } from './subject_materials/subject_materials.mo
     DepartmentModule, 
     SubjectModule, 
     GradeModule, 
-    DatabaseModule, UserSubjectModule, AuthModule, FileManagementModule, SubjectMaterialsModule
+    DatabaseModule, UserSubjectModule, AuthModule, FileManagementModule, SubjectMaterialsModule, SubjectRoleModule
   ],
   controllers: [AppController],
   providers: [AppService],
