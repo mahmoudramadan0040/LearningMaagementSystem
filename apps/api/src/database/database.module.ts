@@ -8,6 +8,7 @@ import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
 import { Grade } from 'src/grade/entities/grade.entity';
 import { FileManagement } from 'src/file_management/entities/file_management.entity';
 import { SubjectMaterial } from 'src/subject_materials/entities/subject_material.entity';
+import { SubjectRole } from 'src/subject_role/entities/subject_role.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), // load .env globally
@@ -21,10 +22,19 @@ import { SubjectMaterial } from 'src/subject_materials/entities/subject_material
         username: config.get<string>('DB_USER'),
         password: config.get<string>('DB_PASS'),
         database: config.get<string>('DB_NAME'),
-        models: [User,Department,UserSubject,Subject,Grade,FileManagement,SubjectMaterial],
+        models: [
+          User,
+          Department,
+          UserSubject,
+          Subject,
+          Grade,
+          FileManagement,
+          SubjectMaterial,
+          SubjectRole,
+        ],
         autoLoadModels: true,
         synchronize: true,
-        sync: { force: true } 
+        sync: { force: true },
       }),
     }),
   ],

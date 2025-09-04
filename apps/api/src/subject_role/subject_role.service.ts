@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubjectRoleDto } from './dto/create-subject_role.dto';
 import { UpdateSubjectRoleDto } from './dto/update-subject_role.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { SubjectRole } from './entities/subject_role.entity';
 
 @Injectable()
 export class SubjectRoleService {
-  create(createSubjectRoleDto: CreateSubjectRoleDto) {
-    return 'This action adds a new subjectRole';
+  constructor(
+    @InjectModel(SubjectRole)
+    private subjectRoleModel: typeof SubjectRole,
+  ) {}
+
+  async create(dto: CreateSubjectRoleDto) {
+    return this.subjectRoleModel.create(dto as any);
   }
 
-  findAll() {
-    return `This action returns all subjectRole`;
+  async findAllRole(id:string) {
+    const roles = await this.subjectRoleModel.findAll({ where: {subjectId:id}, include: { all: true } });
+    if(!roles){
+      throw new NotFoundException('roles not exists');
+    }
+    return roles;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subjectRole`;
+  async findOne(id: string) {
+    const role = await this.subjectRoleModel.findByPk(id, { include: { all: true } });
+    if(!role){
+      throw new NotFoundException('roles not exists');
+    }
+    return role;
   }
 
-  update(id: number, updateSubjectRoleDto: UpdateSubjectRoleDto) {
-    return `This action updates a #${id} subjectRole`;
+  async update(id: string, dto: Partial<CreateSubjectRoleDto>) {
+    return this.subjectRoleModel.update(dto as any, { where: { id } });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subjectRole`;
+  async remove(id: string) {
+    return this.subjectRoleModel.destroy({ where: { id } });
   }
 }

@@ -49,8 +49,11 @@ export class SubjectMaterial extends Model<SubjectMaterial> {
 
   // one to one relationship 
   @ForeignKey(() => Subject)
-  @Column
-  subjectId: number;
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  subjectId: string;
 
   @BelongsTo(() => Subject)
   subject: Subject;

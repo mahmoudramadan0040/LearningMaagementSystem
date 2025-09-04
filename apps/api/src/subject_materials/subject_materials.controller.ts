@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { SubjectMaterialsService } from './subject_materials.service';
 import { FileUploadAdapterImpl } from './adapters/file-upload-adapter';
-import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 @Controller('subject-materials')
 @ApiTags(" Subject Materials ")
 export class SubjectMaterialsController {

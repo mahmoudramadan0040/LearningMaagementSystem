@@ -16,11 +16,16 @@ import { SubjectRoleModule } from './subject_role/subject_role.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), // load .env globally
-    UsersModule, 
-    DepartmentModule, 
-    SubjectModule, 
-    GradeModule, 
-    DatabaseModule, UserSubjectModule, AuthModule, FileManagementModule, SubjectMaterialsModule, SubjectRoleModule
+    UsersModule,
+    DepartmentModule,
+    SubjectModule,
+    GradeModule,
+    DatabaseModule,
+    UserSubjectModule,
+    AuthModule,
+    FileManagementModule,
+    SubjectMaterialsModule,
+    SubjectRoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
