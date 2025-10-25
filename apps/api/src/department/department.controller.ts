@@ -4,11 +4,11 @@ import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Department') 
-@Controller('department')
+@Controller('departments')
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) {}
 
-  @Post()
+  @Post('department')
   async create(@Body() createDepartmentDto: CreateDepartmentDto) {
     return this.departmentService.create(createDepartmentDto);
   }
@@ -18,17 +18,17 @@ export class DepartmentController {
     return this.departmentService.findAll();
   }
 
-  @Get(':id')
+  @Get('/department/:id')
   async findOne(@Param('id',new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.departmentService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('/department/:id')
   async update(@Param('id',new ParseUUIDPipe({ version: '4' })) id: string, @Body() updateDepartmentDto: UpdateDepartmentDto) {
     return this.departmentService.update(id, updateDepartmentDto);
   }
 
-  @Delete(':id')
+  @Delete('/department/:id')
   async remove(@Param('id',new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.departmentService.remove(id);
   }

@@ -11,6 +11,8 @@ import { BatchUpdateUserDto } from './dto/batch-update-users.dto';
 import { Sequelize } from 'sequelize-typescript';
 import { Op } from 'sequelize';
 import * as bcrypt from 'bcryptjs';
+
+import { omit } from 'lodash'; // npm i lodash
 @Injectable()
 export class UsersService {
   constructor(
@@ -20,7 +22,7 @@ export class UsersService {
   ) {}
 
   // create
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<User|any> {
     const existingUser = await this.userRepository.findOne({
       where: {
         [Op.or]: [
@@ -37,7 +39,9 @@ export class UsersService {
       createUserDto.password as string,
       10,
     );
-    return this.userRepository.create(createUserDto as any);
+    let {password ,refreshToken,...result}= (await this.userRepository.create(createUserDto as any)).dataValues;
+    
+    return result;
   }
   // get all users
   async findAll(page: number = 1, limit: number = 10) {
@@ -63,6 +67,7 @@ export class UsersService {
       include: { all: true },
     });
     if (!user) throw new NotFoundException(`User with Id "${id}" not found !`);
+    
     return user;
   }
   // update signle user
@@ -124,7 +129,7 @@ export class UsersService {
   ): Promise<void> {
     const user = await this.userRepository.findByPk(userId);
     if (!user) throw new NotFoundException('User not found');
-    await user.update({ refreshToken: hashedRefreshToken as any });
+    await user.update({ refreshToken: hashedRefreshToken as string });
   }
 
   async FindbyUserNameOrEmail(identifier: string): Promise<User | null> {

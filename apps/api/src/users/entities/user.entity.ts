@@ -16,7 +16,7 @@ import { Department } from 'src/department/entities/department.entity';
 import { FileManagement } from 'src/file_management/entities/file_management.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
-
+import { Exclude } from 'class-transformer';
 export enum UserRole {
   STUDENT = 'Student',
   TEACHER = 'Teacher',
@@ -55,6 +55,7 @@ export class User extends Model<User> {
     type: DataType.STRING,
     allowNull: false,
   })
+
   password: string;
   @Column({
     type: DataType.STRING,

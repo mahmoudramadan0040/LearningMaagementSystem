@@ -11,6 +11,8 @@ import {
   HttpCode,
   ParseUUIDPipe,
   Query,
+  ClassSerializerInterceptor,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -29,7 +31,28 @@ import { BatchUpdateUserDto } from './dto/batch-update-users.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+
   @Post()
+  @ApiBody({
+    description: 'Default request example',
+    schema: {
+      example: {
+        name: 'Ahmed Hassan',
+        student_id: 'STU20251021',
+        password: 'Ahm3d@123',
+        username: 'ahmed_hassan',
+        email: 'ahmed.hassan@example.com',
+        class_code: 'CSE301',
+        phone: '+201023456789',
+        address: '25 El Tahrir St, Cairo, Egypt',
+        national_id: '29805121501234',
+        role: 'Student',
+        level_status: 'Active',
+        level: 3,
+        Graduated: false,
+      },
+    },
+  })
   @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({ status: 201, type: User })
   @HttpCode(201)
@@ -71,7 +94,7 @@ export class UsersController {
   @HttpCode(200)
   async findOne(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
-  ): Promise<User | null> {
+  ): Promise<User | any> {
     return await this.usersService.findOne(id);
   }
 

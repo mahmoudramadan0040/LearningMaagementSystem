@@ -6,7 +6,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { Roles } from './roles.decorator';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -20,10 +22,18 @@ export class AuthController {
       loginDto.identifier,
       loginDto.password,
     );
-    
     return await this.authService.login(user);
   }
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        userId: { type: 'string' },
+        refreshToken: { type: 'string' },
+      },
+    },
+  })
   @Post('refresh')
   async refresh(@Body() body: { userId: string; refreshToken: string }) {
     return this.authService.refreshToken(body.userId, body.refreshToken);

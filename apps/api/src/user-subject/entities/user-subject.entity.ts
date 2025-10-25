@@ -1,4 +1,13 @@
-import { Table, Column, Model, ForeignKey, PrimaryKey, Default, DataType } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  ForeignKey,
+  PrimaryKey,
+  Default,
+  DataType,
+  BelongsTo,
+} from 'sequelize-typescript';
 import { User } from '../../users/entities/user.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 
@@ -12,10 +21,21 @@ export class UserSubject extends Model<UserSubject> {
   declare id: string; // string instead of number
 
   @ForeignKey(() => User)
-  @Column
-  userId: number;
+  @Column({
+    type: DataType.UUID,
+  })
+  userId: string;
 
   @ForeignKey(() => Subject)
-  @Column
-  subjectId: number;
+  @Column({
+    type: DataType.UUID,
+  })
+  subjectId: string;
+
+  // Relations
+  @BelongsTo(() => User)
+  user: User;
+
+  @BelongsTo(() => Subject)
+  subject: Subject;
 }
