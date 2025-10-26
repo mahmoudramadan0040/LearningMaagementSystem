@@ -24,10 +24,10 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
     <Box>
       <Stack
         mb={3}
-        // spacing={2}
+        spacing={2}
       >
-        <Grid container spacing={1}>
-          <Grid size={4}>
+        <Grid container spacing={2}>
+          <Grid size={3}>
             <Typography
               variant="subtitle1"
               fontWeight={600}

@@ -12,7 +12,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { Op } from 'sequelize';
 import * as bcrypt from 'bcryptjs';
 
-import { omit } from 'lodash'; // npm i lodash
+
 @Injectable()
 export class UsersService {
   constructor(
