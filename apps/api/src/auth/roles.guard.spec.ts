@@ -61,7 +61,7 @@ describe('RolesGuard', () => {
     });
 
     it('should return true when user has required role', () => {
-      const user = { roles: ['Student', 'Teacher'] };
+      const user = { roles: ['Student', 'Teaching_Assistant'] };
       const context = mockExecutionContext(user, [User_Roles.STUDENT]);
 
       const result = guard.canActivate(context);
@@ -70,10 +70,10 @@ describe('RolesGuard', () => {
     });
 
     it('should return true when user has multiple roles and one matches', () => {
-      const user = { roles: ['Student', 'Teacher'] };
+      const user = { roles: ['Student', 'Teaching_Assistant'] };
       const context = mockExecutionContext(user, [
         User_Roles.ADMIN,
-        User_Roles.TEACHER,
+        User_Roles.TEACHING_ASSISTANT,
       ]);
 
       const result = guard.canActivate(context);
@@ -134,8 +134,8 @@ describe('RolesGuard', () => {
           expected: true,
         },
         {
-          userRoles: ['Teacher'],
-          requiredRole: User_Roles.TEACHER,
+          userRoles: ['Teaching_Assistant'],
+          requiredRole: User_Roles.TEACHING_ASSISTANT,
           expected: true,
         },
         {
@@ -169,7 +169,7 @@ describe('RolesGuard', () => {
       const context = mockExecutionContext(user, [
         User_Roles.ADMIN,
         User_Roles.STUDENT,
-        User_Roles.TEACHER,
+        User_Roles.TEACHING_ASSISTANT,
       ]);
 
       const result = guard.canActivate(context);
@@ -181,7 +181,7 @@ describe('RolesGuard', () => {
       const user = { roles: ['Student'] };
       const context = mockExecutionContext(user, [
         User_Roles.ADMIN,
-        User_Roles.TEACHER,
+        User_Roles.TEACHING_ASSISTANT,
       ]);
 
       const result = guard.canActivate(context);

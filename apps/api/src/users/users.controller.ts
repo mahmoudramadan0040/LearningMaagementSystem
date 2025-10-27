@@ -13,6 +13,7 @@ import {
   Query,
   ClassSerializerInterceptor,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -23,14 +24,17 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { BatchUpdateUserDto } from './dto/batch-update-users.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles, User_Roles } from 'src/auth/roles.decorator';
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
 
   @Post()
   @ApiBody({
@@ -60,6 +64,9 @@ export class UsersController {
     return await this.usersService.create(createUserDto);
   }
 
+  // @ApiBearerAuth('access-token')
+  // @UseGuards(AuthGuard('jwt'), RolesGuard)
+  // @Roles(User_Roles.ADMIN, User_Roles.TEACHING_ASSISTANT)
   @Get()
   @ApiOperation({ summary: 'Get all users with relations' })
   @ApiResponse({

@@ -19,9 +19,11 @@ import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
 import { Exclude } from 'class-transformer';
 export enum UserRole {
   STUDENT = 'Student',
-  TEACHER = 'Teacher',
-  ADMIN = 'Admin',
-  MANAGER = 'Manager',
+  TEACHING_ASSISTANT = 'Teaching_Assistant',
+  DOCTOR='Doctor',
+  ADMIN = "Admin",
+  MANAGER='Manager',
+  STUDENT_AFFAIRS_OFFICER='Student_Affairs_Officer'
 }
 
 @Table({

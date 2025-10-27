@@ -20,6 +20,17 @@ async function bootstrap() {
     .setTitle('Learning Management System API')
     .setDescription('API documentation')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token (without Bearer prefix)',
+        in: 'header',
+      },
+      'access-token', // name for reference
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
