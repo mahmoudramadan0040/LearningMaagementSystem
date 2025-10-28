@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import { FileManagementModule } from './file_management/file_management.module';
 import { SubjectMaterialsModule } from './subject_materials/subject_materials.module';
 import { SubjectRoleModule } from './subject_role/subject_role.module';
+import { ExamSessionModule } from './exam_session/exam_session.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { SubjectRoleModule } from './subject_role/subject_role.module';
     FileManagementModule,
     SubjectMaterialsModule,
     SubjectRoleModule,
+    ExamSessionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

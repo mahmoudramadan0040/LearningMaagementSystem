@@ -49,6 +49,13 @@ export class Subject extends Model<Subject> {
   })
   level: Number;
 
+  @Default(true)
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  })
+  IsCalulated:Boolean;
+
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -113,7 +120,12 @@ export class Subject extends Model<Subject> {
   })
   pass_percentage: number;
 
-
+  // if subject have GBA
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  creditHours: number;
   // relation between user and department 
   // Foreign key
   @ForeignKey(() => Department)

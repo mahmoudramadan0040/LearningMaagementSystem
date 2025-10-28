@@ -8,6 +8,7 @@ import {
 } from 'sequelize-typescript';
 import { User } from 'src/users/entities/user.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
+import { ExamSession } from 'src/exam_session/entities/exam_session.entity';
 
 @Table({ tableName: 'grades', timestamps: true })
 export class Grade extends Model<Grade> {
@@ -17,11 +18,7 @@ export class Grade extends Model<Grade> {
     primaryKey: true,
   })
   declare id: string;
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  grade_session: string;
+  
 
   @Column({ type: DataType.JSON, allowNull: false })
   score: number | string;
@@ -45,4 +42,12 @@ export class Grade extends Model<Grade> {
 
   @BelongsTo(() => Subject)
   subject: Subject;
+
+  // ✅ NEW: Foreign Key to ExamSession
+  @ForeignKey(() => ExamSession)
+  @Column(DataType.UUID)
+  examSessionId: string;
+
+  @BelongsTo(() => ExamSession)
+  examSession: ExamSession;
 }

@@ -9,6 +9,7 @@ import { Grade } from 'src/grade/entities/grade.entity';
 import { FileManagement } from 'src/file_management/entities/file_management.entity';
 import { SubjectMaterial } from 'src/subject_materials/entities/subject_material.entity';
 import { SubjectRole } from 'src/subject_role/entities/subject_role.entity';
+import { ExamSession } from 'src/exam_session/entities/exam_session.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), // load .env globally
@@ -31,6 +32,7 @@ import { SubjectRole } from 'src/subject_role/entities/subject_role.entity';
           FileManagement,
           SubjectMaterial,
           SubjectRole,
+          ExamSession
         ],
         autoLoadModels: true,
         synchronize: true,
