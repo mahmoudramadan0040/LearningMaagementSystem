@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import {
   FastifyAdapter,
@@ -41,6 +42,12 @@ async function bootstrap() {
   await app.register(fastifyStatic, {
     root: join(__dirname, '..', 'uploads'),
     prefix: '/uploads/',
+  });
+  await app.register(cors, {
+    origin: 'http://localhost:3000', // allow your Next.js frontend
+    credentials: true, // allow cookies/auth headers if needed
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'], // optional
+    allowedHeaders: ['Content-Type', 'Authorization'], // optional
   });
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),

@@ -11,7 +11,8 @@ import {
   IconHome,
   IconUserX,
   IconUsers,
-  IconUserOff
+  IconUserOff,
+  IconCalendarEvent,
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
@@ -38,10 +39,30 @@ const Menuitems = [
     icon: IconSchool,
     href: "/students",
     children: [
-      { id: uniqueId(), title: "All Students", href: "/students",icon: IconUsers, },
-      { id: uniqueId(), title: "Student Levels", href: "/students/levels",icon: IconSchool, },
-      { id: uniqueId(), title: "Add Students", href: "/students/add",icon: IconUserPlus, },
-      { id: uniqueId(), title: "Remove Students", href: "/students/delete",icon: IconUserOff, },
+      {
+        id: uniqueId(),
+        title: "All Students",
+        href: "/students",
+        icon: IconUsers,
+      },
+      {
+        id: uniqueId(),
+        title: "Student Levels",
+        href: "/students/levels",
+        icon: IconSchool,
+      },
+      {
+        id: uniqueId(),
+        title: "Add Students",
+        href: "/students/add",
+        icon: IconUserPlus,
+      },
+      {
+        id: uniqueId(),
+        title: "Remove Students",
+        href: "/students/delete",
+        icon: IconUserOff,
+      },
     ],
   },
   {
@@ -54,10 +75,30 @@ const Menuitems = [
     icon: IconLayoutDashboard,
     href: "/subjects",
     children: [
-      { id: uniqueId(), title: "All Subjects", href: "/subjects",icon: IconUsers, },
-      { id: uniqueId(), title: "Add Subject", href: "/subjects/subject/add",icon: IconUserPlus, },
-      { id: uniqueId(), title: "Modify Subject", href: "/subjects/subject/update",icon: IconUserPlus, },
-      { id: uniqueId(), title: "Remove Subject", href: "/subjects/subject/delete",icon: IconUserOff, },
+      {
+        id: uniqueId(),
+        title: "All Subjects",
+        href: "/subjects",
+        icon: IconUsers,
+      },
+      {
+        id: uniqueId(),
+        title: "Add Subject",
+        href: "/subjects/subject/add",
+        icon: IconUserPlus,
+      },
+      {
+        id: uniqueId(),
+        title: "Modify Subject",
+        href: "/subjects/subject/update",
+        icon: IconUserPlus,
+      },
+      {
+        id: uniqueId(),
+        title: "Remove Subject",
+        href: "/subjects/subject/delete",
+        icon: IconUserOff,
+      },
     ],
   },
   {
@@ -70,9 +111,19 @@ const Menuitems = [
     icon: IconChalkboardTeacher,
     href: "/staff",
     children: [
-      { id: uniqueId(), title: "All Staff", href: "/staff",icon: IconUsers, },
-      { id: uniqueId(), title: "Add Employee", href: "/staff/add",icon: IconUserPlus, },
-      { id: uniqueId(), title: "Remove Employee", href: "/staff/delete",icon: IconUserOff, },
+      { id: uniqueId(), title: "All Staff", href: "/staff", icon: IconUsers },
+      {
+        id: uniqueId(),
+        title: "Add Employee",
+        href: "/staff/add",
+        icon: IconUserPlus,
+      },
+      {
+        id: uniqueId(),
+        title: "Remove Employee",
+        href: "/staff/delete",
+        icon: IconUserOff,
+      },
     ],
   },
   {
@@ -85,25 +136,29 @@ const Menuitems = [
     icon: IconChalkboardTeacher,
     href: "/staff",
     children: [
-      { id: uniqueId(), title: "All department", href: "/department",icon: IconUsers, },
-      { id: uniqueId(), title: "New Department", href: "/department/add",icon: IconUserPlus, },
+      {
+        id: uniqueId(),
+        title: "All department",
+        href: "/department",
+        icon: IconUsers,
+      },
+      {
+        id: uniqueId(),
+        title: "New Department",
+        href: "/department/add",
+        icon: IconUserPlus,
+      },
     ],
   },
   {
     navlabel: true,
-    subheader: "UTILITIES",
+    subheader: "Management Exam Sessions",
   },
   {
     id: uniqueId(),
-    title: "Typography",
-    icon: IconTypography,
-    href: "/utilities/typography",
-  },
-  {
-    id: uniqueId(),
-    title: "Shadow",
-    icon: IconCopy,
-    href: "/utilities/shadow",
+    title: "Exam Sessions",
+    icon: IconCalendarEvent,
+    href: "/exam-sessions",
   },
   {
     navlabel: true,
@@ -121,25 +176,7 @@ const Menuitems = [
     icon: IconUserPlus,
     href: "/auth/register",
   },
-  {
-    navlabel: true,
-    subheader: " EXTRA",
-  },
-  {
-    id: uniqueId(),
-    title: "Icons",
-    icon: IconMoodHappy,
-    href: "/icons",
-  },
-  {
-    id: uniqueId(),
-    title: "Sample Page",
-    icon: IconAperture,
-    href: "/sample-page",
-  },
-
+  
 ];
 
 export default Menuitems;
-
-
