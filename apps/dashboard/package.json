@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fullcalendar/core": "^6.1.15",
@@ -20,6 +21,7 @@
     "@mui/lab": "^7.0.1-beta.18",
     "@mui/material": "^7.3.4",
     "@mui/system": "^7.3.3",
+    "@mui/x-data-grid": "^8.16.0",
     "@react-jvectormap/core": "^1.0.4",
     "@react-jvectormap/world": "^1.1.2",
     "@reduxjs/toolkit": "^2.9.2",

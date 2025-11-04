@@ -25,7 +25,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import { IconPlus, IconEdit, IconTrash, IconSchool } from "@tabler/icons-react";
-import ExamSessionFormDialog from "@/components/exam-sessions/ExamSessionFormDialog";
+import ExamSessionFormDialog from "@/app/(DashboardLayout)/exam-sessions/components/ExamSessionFormDialog";
 import {
   useListExamSessionsQuery,
   useDeleteExamSessionMutation,

@@ -134,18 +134,18 @@ const Menuitems = [
     id: uniqueId(),
     title: "Departments",
     icon: IconChalkboardTeacher,
-    href: "/staff",
+    href: "/departments",
     children: [
       {
         id: uniqueId(),
         title: "All department",
-        href: "/department",
+        href: "/departments",
         icon: IconUsers,
       },
       {
         id: uniqueId(),
         title: "New Department",
-        href: "/department/add",
+        href: "/departments/department/add",
         icon: IconUserPlus,
       },
     ],

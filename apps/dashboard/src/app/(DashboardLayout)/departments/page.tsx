@@ -1,18 +1,25 @@
 "use client";
-import React, { useMemo, useState } from "react";
+// DepartmentsPage.tsx
+import * as React from "react";
 import {
+  Box,
   Button,
-  Card,
-  Form,
-  Input,
-  Modal,
-  Space,
-  Table,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+  Stack,
+  TextField,
   Typography,
-  Popconfirm,
-  message,
-} from "antd";
-import type { ColumnsType } from "antd/es/table";
+  CircularProgress,
+  Tooltip,
+  CardContent,
+  Card,
+} from "@mui/material";
+import { GridColDef, GridRenderCellParams, DataGrid } from "@mui/x-data-grid";
+
+import { IconPlus, IconEdit, IconTrash, IconEye } from "@tabler/icons-react";
 import {
   useListDepartmentsQuery,
   useCreateDepartmentMutation,
@@ -20,19 +27,20 @@ import {
   useDeleteDepartmentMutation,
   DepartmentDto,
 } from "@/store/services/departmentsApi";
-import {
-  PlusOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import DepartmentFormDialog from "./components/DepartmentFormDialog";
+import DeleteConfirmDialog from "./components/DeleteConfirmDialog";
+import { useRouter } from "next/navigation";
+type FormState = {
+  id?: string;
+  name: string;
+  Faculty: string;
+};
 
-export default function DepartmentPage() {
-  const {
-    data: departments = [],
-    isLoading,
-    refetch,
-  } = useListDepartmentsQuery();
+export default function DepartmentsPage() {
+  const router = useRouter();
+  // Queries & mutations
+  const { data, isLoading, isFetching, isError, refetch } =
+    useListDepartmentsQuery();
   const [createDepartment, { isLoading: isCreating }] =
     useCreateDepartmentMutation();
   const [updateDepartment, { isLoading: isUpdating }] =
@@ -40,160 +48,223 @@ export default function DepartmentPage() {
   const [deleteDepartment, { isLoading: isDeleting }] =
     useDeleteDepartmentMutation();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editing, setEditing] = useState<DepartmentDto | null>(null);
-  const [form] = Form.useForm<{ name: string; description?: string }>();
+  // UI State
+  const [openForm, setOpenForm] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [selected, setSelected] = React.useState<DepartmentDto | null>(null);
+  const [form, setForm] = React.useState<FormState>({ name: "", Faculty: "" });
+  const [errors, setErrors] = React.useState<{
+    name?: string;
+    Faculty?: string;
+  }>({});
 
-  const openCreate = () => {
-    setEditing(null);
-    form.resetFields();
-    setIsModalOpen(true);
+  const handleOpenCreate = () => {
+    setSelected(null);
+    setForm({ name: "", Faculty: "" });
+    setErrors({});
+    setOpenForm(true);
   };
 
-  const openEdit = (record: DepartmentDto) => {
-    setEditing(record);
-    form.setFieldsValue({ name: record.name, description: record.Faculty });
-    setIsModalOpen(true);
+  const handleOpenEdit = (row: DepartmentDto) => {
+    setSelected(row);
+    setForm({ id: row.id, name: row.name, Faculty: row.Faculty });
+    setErrors({});
+    setOpenForm(true);
   };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setEditing(null);
-    form.resetFields();
+  const handleOpenDelete = (row: DepartmentDto) => {
+    setSelected(row);
+    setOpenDelete(true);
   };
 
-  const handleSubmit = async () => {
+
+
+  const validate = (values: FormState) => {
+    const errs: typeof errors = {};
+    if (!values.name?.trim()) errs.name = "Name is required";
+    if (!values.Faculty?.trim()) errs.Faculty = "Faculty is required";
+    return errs;
+  };
+
+  const onSubmit = async () => {
+    const v = validate(form);
+    setErrors(v);
+    if (Object.keys(v).length > 0) return;
     try {
-      const values = await form.validateFields();
-      if (editing) {
+      if (selected) {
         await updateDepartment({
-          id: editing.id as unknown as string,
-          body: values,
+          id: selected.id,
+          body: { name: form.name, Faculty: form.Faculty },
         }).unwrap();
-        message.success("Department updated");
       } else {
-        await createDepartment(values).unwrap();
-        message.success("Department created");
+        await createDepartment({
+          name: form.name,
+          Faculty: form.Faculty,
+        }).unwrap();
       }
-      setIsModalOpen(false);
-      setEditing(null);
-      form.resetFields();
-      refetch();
-    } catch (err) {
-      // validation error or API error is handled implicitly; show message if API failed
-      if ((err as any)?.data?.message) {
-        message.error(String((err as any).data.message));
-      }
+      setOpenForm(false);
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const onConfirmDelete = async () => {
+    if (!selected) return;
     try {
-      await deleteDepartment(id).unwrap();
-      message.success("Department deleted");
-      refetch();
-    } catch (err) {
-      message.error("Failed to delete department");
+      await deleteDepartment(selected.id).unwrap();
+      setOpenDelete(false);
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  const columns: ColumnsType<DepartmentDto> = useMemo(
-    () => [
-      {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-      },
-      {
-        title: "Faculty",
-        dataIndex: "Faculty",
-        key: "Faculty",
-        render: (text: string | undefined) => text || "-",
-      },
-      {
-        title: "Actions",
-        key: "actions",
-        width: 160,
-        render: (_value, record) => (
-          <Space>
-            <Button icon={<EditOutlined />} onClick={() => openEdit(record)}>
-              Edit
-            </Button>
-            <Popconfirm
-              title="Delete department"
-              description="Are you sure you want to delete this department?"
-              okText="Delete"
-              okButtonProps={{ danger: true, loading: isDeleting }}
-              onConfirm={() => handleDelete(record.id as unknown as string)}
+  const columns: GridColDef[] = [
+    { field: "name", headerName: "Department Name", flex: 1, resizable: true },
+    { field: "Faculty", headerName: "Faculty", flex: 1, resizable: true },
+    {
+      field: "actions",
+      headerName: "Actions",
+      minWidth:140,
+      sortable: false,
+      filterable: false,
+      resizable: true,
+      renderCell: (params: GridRenderCellParams<DepartmentDto>) => (
+        <Stack direction="row" spacing={1}>
+          <Tooltip title="View">
+            <IconButton
+              size="small"
+              onClick={() =>
+                router.push(`/departments/department/${params.row.id}`)
+              }
             >
-              <Button danger icon={<DeleteOutlined />}>
-                Delete
-              </Button>
-            </Popconfirm>
-          </Space>
-        ),
-      },
-    ],
-    [isDeleting]
-  );
+              <IconEye fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Edit">
+            <IconButton size="small" color="primary" onClick={() => handleOpenEdit(params.row)}>
+              <IconEdit fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton
+              size="small"
+              color="error"
+              onClick={() => handleOpenDelete(params.row)}
+            >
+              <IconTrash fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      ),
+    },
+  ];
 
   return (
-    <Card>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: 16,
-        }}
-      >
-        <Typography.Title level={3} style={{ margin: 0 }}>
-          Departments
-        </Typography.Title>
-        <Space>
-          <Button icon={<ReloadOutlined />} onClick={() => refetch()}>
-            Refresh
-          </Button>
-          <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
-            New Department
-          </Button>
-        </Space>
-      </div>
-
-      <Table
-        rowKey={(r) => (r.id as unknown as string) || r.name}
-        loading={isLoading}
-        dataSource={departments}
-        columns={columns}
-        pagination={{ pageSize: 10, showSizeChanger: true }}
-      />
-
-      <Modal
-        title={editing ? "Edit Department" : "Create Department"}
-        open={isModalOpen}
-        onCancel={handleCancel}
-        onOk={handleSubmit}
-        okButtonProps={{ loading: isCreating || isUpdating }}
-        destroyOnHidden
-      >
-        <Form form={form} layout="vertical" preserve={false}>
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[
-              { required: true, message: "Please enter department name" },
-            ]}
+    <Box p={2}>
+      <Card>
+        <CardContent>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={2}
           >
-            <Input placeholder="e.g., Computer Science" />
-          </Form.Item>
-          <Form.Item label="Faculty" name="Faculty">
-            <Input.TextArea
-              placeholder="Faculty of indutry and energy "
-              autoSize={{ minRows: 3 }}
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
-    </Card>
+            <Typography variant="h4">Departments</Typography>
+            <Stack direction="row" spacing={1}>
+              <Button
+                variant="outlined"
+                onClick={() => refetch()}
+                disabled={isFetching}
+              >
+                {isFetching ? "Refreshing..." : "Refresh"}
+              </Button>
+              <Button
+                startIcon={<IconPlus />}
+                variant="contained"
+                onClick={handleOpenCreate}
+              >
+                New Department
+              </Button>
+            </Stack>
+          </Stack>
+
+          <Box sx={{ height: "auto", width: "auto" }}>
+            <Card>
+              <CardContent>
+                {isLoading ? (
+                  <Stack
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{ height: "100%" }}
+                  >
+                    <CircularProgress />
+                  </Stack>
+                ) : isError ? (
+                  <Typography color="error">
+                    Failed to load departments.
+                  </Typography>
+                ) : (
+                  <DataGrid
+                    density="compact"
+                    rows={data ?? []}
+                    columns={columns}
+                    getRowId={(row: DepartmentDto) => row.id}
+                    pageSizeOptions={[5, 10, 25]}
+                    initialState={{
+                      pagination: {
+                        paginationModel: { page: 0, pageSize: 10 },
+                      },
+                    }}
+                    disableRowSelectionOnClick
+                    sx={{
+                      border: "1px solid grey.300",
+
+                      borderColor: "divider", // theme divider color
+                      "& .MuiDataGrid-cell": {
+                        borderBottom: "1px solid #e0e0e0", // border between rows
+                        borderRight: "1px solid #e0e0e0", // vertical cell borders
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+                        border: "1px solid #e0e0e0", // header bottom border
+                      },
+                      "& .MuiDataGrid-row:hover": {
+                        backgroundColor: "#f5f5f5",
+                      },
+                    }}
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </Box>
+
+          {/* Create/Edit Dialog */}
+
+          <DepartmentFormDialog
+            open={openForm}
+            onClose={() => setOpenForm(false)}
+            selected={
+              selected
+                ? {
+                    id: selected.id,
+                    name: selected.name,
+                    Faculty: selected.Faculty,
+                  }
+                : null
+            }
+            loading={isCreating || isUpdating}
+            onSubmit={onSubmit}
+          />
+
+          {/* Delete Confirm Dialog */}
+          <DeleteConfirmDialog
+            open={openDelete}
+            onClose={() => setOpenDelete(false)}
+            name={selected?.name}
+            loading={isDeleting}
+            onConfirm={onConfirmDelete}
+          />
+        </CardContent>
+      </Card>
+    </Box>
   );
 }

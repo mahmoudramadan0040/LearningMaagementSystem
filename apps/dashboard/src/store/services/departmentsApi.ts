@@ -38,8 +38,8 @@ export const departmentsApi = createApi({
       { id: string; body: Partial<DepartmentDto> }
     >({
       query: ({ id, body }) => ({
-        url: `/department/${id}`,
-        method: "PUT",
+        url: `/departments/department/${id}`,
+        method: "PATCH",
         body,
       }),
       invalidatesTags: (_res, _err, { id }) => [{ type: "Departments", id }],
