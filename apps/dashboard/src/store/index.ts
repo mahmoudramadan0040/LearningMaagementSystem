@@ -4,6 +4,7 @@ import { authApi } from "./services/authApi";
 import { usersApi } from "./services/usersApi";
 import { departmentsApi } from "./services/departmentsApi";
 import { examSessionsApi } from "./services/examSessionsApi";
+import { subjectsApi } from "./services/subjectApi";
 
 export const store = configureStore({
   reducer: {
@@ -12,13 +13,15 @@ export const store = configureStore({
     [usersApi.reducerPath]: usersApi.reducer,
     [departmentsApi.reducerPath]: departmentsApi.reducer,
     [examSessionsApi.reducerPath]: examSessionsApi.reducer,
+    [subjectsApi.reducerPath]:subjectsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApi.middleware,
       usersApi.middleware,
       departmentsApi.middleware,
-      examSessionsApi.middleware
+      examSessionsApi.middleware,
+      subjectsApi.middleware
     ),
 });
 

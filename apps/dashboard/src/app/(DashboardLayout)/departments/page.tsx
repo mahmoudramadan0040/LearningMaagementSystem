@@ -4,13 +4,9 @@ import * as React from "react";
 import {
   Box,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+
   IconButton,
   Stack,
-  TextField,
   Typography,
   CircularProgress,
   Tooltip,
@@ -86,7 +82,8 @@ export default function DepartmentsPage() {
     return errs;
   };
 
-  const onSubmit = async () => {
+  const onSubmitData = async (form: FormState) => {
+    console.log("hellow")
     const v = validate(form);
     setErrors(v);
     if (Object.keys(v).length > 0) return;
@@ -252,7 +249,7 @@ export default function DepartmentsPage() {
                 : null
             }
             loading={isCreating || isUpdating}
-            onSubmit={onSubmit}
+            onSubmit={onSubmitData}
           />
 
           {/* Delete Confirm Dialog */}

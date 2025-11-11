@@ -131,13 +131,15 @@ export class Subject extends Model<Subject> {
   @ForeignKey(() => Department)
   @Column({
     type: DataType.UUID,
-    allowNull: false,
+    allowNull: true,
   })
   departmentId: string;
 
 
   // Relation
-  @BelongsTo(() => Department)
+  @BelongsTo(() => Department,{
+    onDelete: 'SET NULL'
+  })
   department: Department;
   
   // Many-to-Many relation with User

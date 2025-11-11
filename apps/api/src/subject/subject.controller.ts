@@ -4,11 +4,11 @@ import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Subject') 
-@Controller('subject')
+@Controller('subjects')
 export class SubjectController {
   constructor(private readonly subjectService: SubjectService) {}
 
-  @Post()
+  @Post('/subject')
   create(@Body() createSubjectDto: CreateSubjectDto) {
     return this.subjectService.create(createSubjectDto);
   }
@@ -18,17 +18,17 @@ export class SubjectController {
     return this.subjectService.findAll();
   }
 
-  @Get(':id')
+  @Get('/subject/:id')
   findOne(@Param('id') id: string) {
     return this.subjectService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('/subject/:id')
   update(@Param('id') id: string, @Body() updateSubjectDto: UpdateSubjectDto) {
     return this.subjectService.update(id, updateSubjectDto);
   }
 
-  @Delete(':id')
+  @Delete('/subject/:id')
   remove(@Param('id') id: string) {
     return this.subjectService.remove(id);
   }

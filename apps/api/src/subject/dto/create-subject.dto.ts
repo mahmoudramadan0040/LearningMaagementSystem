@@ -57,6 +57,9 @@ export class CreateSubjectDto {
   @ApiProperty({ enum: GradeType, example: GradeType.NORMAL })
   @IsEnum(GradeType)
   grade_type: GradeType;
+  @ApiProperty({ example: 3 })
+  @IsInt()
+  creditHours
 
   @ApiProperty({ example: 50 })
   @IsInt()
@@ -64,7 +67,8 @@ export class CreateSubjectDto {
   @Max(100)
   pass_percentage: number;
 
+  @IsOptional() // ✅ allows null or missing
   @ApiProperty({ example: 'a3f3d3a7-3e33-47f0-85aa-1b9c0e5f0d8f' })
-  @IsUUID()
+  @IsUUID() // ✅ must be a UUID if provided
   departmentId: string;
 }

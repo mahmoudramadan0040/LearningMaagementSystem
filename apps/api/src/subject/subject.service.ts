@@ -3,6 +3,7 @@ import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { Subject } from './entities/subject.entity';
 import { InjectModel } from '@nestjs/sequelize';
+import { Department } from 'src/department/entities/department.entity';
 
 @Injectable()
 export class SubjectService {
@@ -25,11 +26,20 @@ export class SubjectService {
     return subject;
   }
 
-  update(id: string, updateSubjectDto: UpdateSubjectDto) {
-    return `This action updates a #${id} subject`;
+  async update(id: string, updateSubjectDto: UpdateSubjectDto) {
+    const subject = await this.subjectRepository.findByPk(id);
+    if (!subject) {
+      throw new NotFoundException(`Subject with ID "${id}" not found!`);
+    }
+    return await subject.update(updateSubjectDto);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} subject`;
+  async remove(id: string) {
+    const subject = await this.subjectRepository.findByPk(id);
+    if(!subject){
+      throw new NotFoundException(`Subject with ID "${id}" not found!`);
+    }
+    return await subject.destroy();
+
   }
 }

@@ -46,7 +46,8 @@
     "react-mui-sidebar": "^1.6.3",
     "react-redux": "^9.2.0",
     "swiper": "^11.2.0",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
