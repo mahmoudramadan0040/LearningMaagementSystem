@@ -3,8 +3,13 @@ import { IsInt, IsNotEmpty, IsString, Min, Max } from 'class-validator';
 
 export class CreateSubjectRoleDto {
   @ApiProperty({ example: 1, description: 'ID of the subject' })
-  @IsInt()
+  @IsString()
   subjectId: number;
+
+  @ApiProperty({ example: 'total', description: 'Rule type: total or exam only or other like cheat or excuse' })
+  @IsString()
+  @IsNotEmpty()
+  ruleType: string
 
   @ApiProperty({ example: 'A', description: 'Grade letter (A, B, C, ...)' })
   @IsString()

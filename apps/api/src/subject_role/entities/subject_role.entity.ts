@@ -24,14 +24,19 @@ export class SubjectRole extends Model<SubjectRole> {
   @BelongsTo(() => Subject)
   subject: Subject;
 
+  @Column({
+    type: DataType.ENUM('total', 'exam', 'excuse', 'cheat'),
+    allowNull: false,
+    defaultValue: 'total',
+  })
+  ruleType: 'total' | 'exam' | 'excuse' | 'cheat';
 
   @Column({ type: DataType.STRING(10), allowNull: false })
   symbol: string; // e.g., A, A-, B+
 
-  @Column({ type: DataType.DOUBLE, allowNull: false })
+  @Column({ type: DataType.DOUBLE, allowNull: true })
   minPercentage: number; // e.g., 85
 
-  @Column({ type: DataType.DOUBLE, allowNull: false })
+  @Column({ type: DataType.DOUBLE, allowNull: true })
   maxPercentage: number; // e.g., 89
-
 }

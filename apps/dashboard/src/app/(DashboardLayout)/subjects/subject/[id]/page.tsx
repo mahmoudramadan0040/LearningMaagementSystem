@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import { useGetSubjectByIdQuery } from "@/store/services/subjectApi";
+import DisplaySubjectRoles from "../../components/DisplaySubjectRole";
 
 export default function SubjectDetailsTable() {
   const { id } = useParams();
@@ -32,12 +33,13 @@ export default function SubjectDetailsTable() {
               Back To Subjects
             </Button>
           </Stack>
+          <Typography variant="h5" sx={{ p: 2 }}>
+              Subject Details : {subject?.name}
+            </Typography>
           <TableContainer component={Paper} sx={{ mt: 3 }}>
             {/* Back Button */}
 
-            <Typography variant="h5" sx={{ p: 2 }}>
-              Subject Details : {subject?.name}
-            </Typography>
+            
             <Table sx={{ borderCollapse: "collapse" }}>
               <TableBody>
                 {/* Row 1 */}
@@ -212,6 +214,8 @@ export default function SubjectDetailsTable() {
               </TableBody>
             </Table>
           </TableContainer>
+      <DisplaySubjectRoles/>
+
         </CardContent>
       </Card>
     </Box>
