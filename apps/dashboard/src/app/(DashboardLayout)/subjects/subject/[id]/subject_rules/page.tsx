@@ -199,6 +199,8 @@ export default function SubjectRolePage() {
           case "cheat":
             return <Chip label="Cheat" color="secondary" size="small" />;
 
+          case "absent":
+            return <Chip label="Cheat" color="info" size="small" />;
           default:
             return <Chip label="Unknown" size="small" />;
         }
@@ -235,14 +237,22 @@ export default function SubjectRolePage() {
             sx={{ alignItems: "center" }}
             mt={2}
           >
-            <Button variant="contained"  onClick={() => router.back()} sx={{margin:"4px"}}>
+            <Button
+              variant="contained"
+              onClick={() => router.back()}
+              sx={{ margin: "4px" }}
+            >
               Back To Subject Details
             </Button>
-            <Button variant="contained" onClick={() => handleOpen()}  sx={{margin:"4px"}}>
-            + Add Rule
-          </Button>
+            <Button
+              variant="contained"
+              onClick={() => handleOpen()}
+              sx={{ margin: "4px" }}
+            >
+              + Add Rule
+            </Button>
           </Stack>
-          
+
           <Paper sx={{ mt: 3, height: 400, width: "100%" }}>
             <DataGrid
               rows={roles}
@@ -294,7 +304,7 @@ export default function SubjectRolePage() {
               const newType = e.target.value;
 
               // Disable + reset min/max when selecting excuse/cheat
-              if (newType === "excuse" || newType === "cheat") {
+              if (newType === "excuse" || newType === "cheat"|| newType==="absent") {
                 setForm({
                   ...form,
                   ruleType: newType,
@@ -310,6 +320,7 @@ export default function SubjectRolePage() {
             <MenuItem value="exam">Exam Only</MenuItem>
             <MenuItem value="excuse">Excuse</MenuItem>
             <MenuItem value="cheat">Cheat</MenuItem>
+            <MenuItem value="absent">Absent</MenuItem>
           </TextField>
           <TextField
             margin="dense"
@@ -324,7 +335,7 @@ export default function SubjectRolePage() {
             margin="dense"
             label="Min Percentage"
             type="number"
-            disabled={form.ruleType === "excuse" || form.ruleType === "cheat"}
+            disabled={form.ruleType === "excuse" || form.ruleType === "cheat" || form.ruleType==="absent"}
             error={!!formErrors.minPercentage}
             helperText={formErrors.minPercentage}
             fullWidth
@@ -337,7 +348,7 @@ export default function SubjectRolePage() {
             margin="dense"
             label="Max Percentage"
             type="number"
-            disabled={form.ruleType === "excuse" || form.ruleType === "cheat"}
+            disabled={form.ruleType === "excuse" || form.ruleType === "cheat" || form.ruleType==="absent"}
             fullWidth
             error={!!formErrors.maxPercentage}
             helperText={formErrors.maxPercentage}

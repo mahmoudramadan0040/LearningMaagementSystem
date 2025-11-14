@@ -35,8 +35,8 @@ import { ExamSession } from 'src/exam_session/entities/exam_session.entity';
           ExamSession
         ],
         autoLoadModels: true,
-        synchronize: true,
-        sync: { force: true },
+        synchronize: false,
+        sync: { force: false },
       }),
     }),
   ],

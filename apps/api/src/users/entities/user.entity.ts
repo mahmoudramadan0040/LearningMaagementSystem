@@ -128,26 +128,7 @@ export class User extends Model<User> {
   })
   unique_id: string;
 
-  static async generateTimeBasedId(): Promise<string> {
-    let id: string;
-    let exists: User | null;
-
-    do {
-      // Get current time in seconds (10 digits)
-      const timestamp = Date.now().toString().slice(-7); // last 7 digits of timestamp
-      const randomPart = Math.floor(10 + Math.random() * 89).toString(); // 2 digits random
-      id = timestamp + randomPart; // total 9 digits
-
-      // Ensure uniqueness in DB
-      exists = await User.findOne({ where: { unique_id: id } });
-    } while (exists);
-
-    return id;
-  }
-  @BeforeCreate
-  static async generateUniqueId(instance: User) {
-    instance.unique_id = await User.generateTimeBasedId();
-  }
+  
   // relation between user and department
   // Foreign key
   @ForeignKey(() => Department)

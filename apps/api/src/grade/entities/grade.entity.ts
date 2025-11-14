@@ -10,7 +10,16 @@ import { User } from 'src/users/entities/user.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 import { ExamSession } from 'src/exam_session/entities/exam_session.entity';
 
-@Table({ tableName: 'grades', timestamps: true })
+@Table({
+  tableName: 'grades',
+  timestamps: true,
+  indexes: [
+    {
+      unique: true,
+      fields: ['userId', 'subjectId', 'examSessionId'],
+    },
+  ],
+})
 export class Grade extends Model<Grade> {
   @Column({
     type: DataType.UUID,
@@ -18,10 +27,15 @@ export class Grade extends Model<Grade> {
     primaryKey: true,
   })
   declare id: string;
-  
 
-  @Column({ type: DataType.JSON, allowNull: false })
-  score: number | string;
+  @Column({ type: DataType.JSON, allowNull: true })
+  total_score: number | string;
+
+  @Column({ type: DataType.JSON, allowNull: true })
+  semester_work_score: number | string;
+
+  @Column({ type: DataType.JSON, allowNull: true })
+  final_exam_score: number | string;
 
   @Column({
     type: DataType.STRING,
@@ -30,14 +44,14 @@ export class Grade extends Model<Grade> {
   grade: string;
 
   @ForeignKey(() => User)
-  @Column(DataType.UUID)  
+  @Column(DataType.UUID)
   userId: string;
 
   @BelongsTo(() => User)
   user: User;
 
   @ForeignKey(() => Subject)
-  @Column(DataType.UUID)  
+  @Column(DataType.UUID)
   subjectId: string;
 
   @BelongsTo(() => Subject)

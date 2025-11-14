@@ -25,11 +25,11 @@ export class SubjectRole extends Model<SubjectRole> {
   subject: Subject;
 
   @Column({
-    type: DataType.ENUM('total', 'exam', 'excuse', 'cheat'),
+    type: DataType.ENUM('total', 'exam', 'excuse', 'cheat','absent'),
     allowNull: false,
     defaultValue: 'total',
   })
-  ruleType: 'total' | 'exam' | 'excuse' | 'cheat';
+  ruleType: 'total' | 'exam' | 'excuse' | 'cheat'|'absent';
 
   @Column({ type: DataType.STRING(10), allowNull: false })
   symbol: string; // e.g., A, A-, B+
