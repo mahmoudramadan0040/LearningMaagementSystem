@@ -12,12 +12,18 @@ import {
   Chip,
   TableContainer,
   Paper,
+  CardContent,
+  Card,
+  Button,
+  Stack,
 } from "@mui/material";
-import { useParams } from "next/navigation";
+
+import { useParams, useRouter } from "next/navigation";
 import { useGetSubjectRolesQuery } from "@/store/services/subject_roleApi";
 
 export default function DisplaySubjectRoles() {
   const params = useParams();
+  const router = useRouter();
   const subjectId = params.id as string;
 
   const {
@@ -41,10 +47,20 @@ export default function DisplaySubjectRoles() {
     );
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="h5" fontWeight="bold" mb={3} mt={3}>
-        Subject Rules
-      </Typography>
+    <Box sx={{ p: 0 }}>
+      <Stack direction="row" justifyContent="space-between" sx={{ alignItems: 'center' }} mt={2}>
+        <Typography variant="h5" fontWeight="bold" mb={3} mt={3}>
+          Subject Rules
+        </Typography>
+        <Button
+          variant="outlined"
+          onClick={() =>
+            router.push(`/subjects/subject/${subjectId}/subject_rules`)
+          }
+        >
+          Manage Rules
+        </Button>
+      </Stack>
 
       {roles.length === 0 ? (
         <Typography
@@ -56,50 +72,67 @@ export default function DisplaySubjectRoles() {
           No rules found for this subject.
         </Typography>
       ) : (
-        
-          <Table
-            sx={{
-              border: "2px solid black",
-              borderCollapse: "collapse",
-              "& td, & th": { border: "1px solid black", padding: "8px" },
-            }}
-          >
-            <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
-              <TableRow>
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Symbol
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Min %
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Max %
-                </TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Status
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {roles.map((r: any) => (
-                <TableRow key={r.id}>
+        <Card>
+          <CardContent>
+            <Table
+              sx={{
+                // border: "2px solid black",
+                borderCollapse: "collapse",
+                "& td, & th": { border: "1px solid black", padding: "8px" },
+              }}
+            >
+              <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+                <TableRow>
                   <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                    {r.symbol}
+                    Symbol
                   </TableCell>
-                  <TableCell align="center">{r.minPercentage}</TableCell>
-                  <TableCell align="center">{r.maxPercentage}</TableCell>
-                  <TableCell align="center">
-                    {r.minPercentage >= 50 ? (
-                      <Chip label="Pass" color="success" size="small" />
-                    ) : (
-                      <Chip label="Low" color="warning" size="small" />
-                    )}
+                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                    Min %
+                  </TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                    Max %
+                  </TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                    Rule Type
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-
+              </TableHead>
+              <TableBody>
+                {roles.map((r: any) => (
+                  <TableRow key={r.id}>
+                    <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                      {r.symbol}
+                    </TableCell>
+                    <TableCell align="center">
+                      {r.ruleType == "excuse" || r.ruleType == "cheat"
+                        ? "-"
+                        : r.minPercentage}
+                    </TableCell>
+                    <TableCell align="center">
+                      {r.ruleType == "excuse" || r.ruleType == "cheat"
+                        ? "-"
+                        : r.maxPercentage}
+                    </TableCell>
+                    <TableCell align="center">
+                      {r.ruleType === "total" && (
+                        <Chip label="Total" color="primary" size="small" />
+                      )}
+                      {r.ruleType === "exam" && (
+                        <Chip label="Exam Only" color="error" size="small" />
+                      )}
+                      {r.ruleType === "excuse" && (
+                        <Chip label="Excuse" color="warning" size="small" />
+                      )}
+                      {r.ruleType === "cheat" && (
+                        <Chip label="Cheat" color="default" size="small" />
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       )}
     </Box>
   );

@@ -28,18 +28,18 @@ export default function SubjectDetailsTable() {
     <Box sx={{ p: 3 }}>
       <Card>
         <CardContent>
-          <Stack direction="row" justifyContent="flex-end" mb={2}>
+          <Stack direction="row" justifyContent="space-between" sx={{ alignItems: 'center' }} mt={2}>
+            <Typography variant="h5" >
+              Subject Details : {subject?.name}
+            </Typography>
             <Button variant="outlined" onClick={() => router.back()}>
               Back To Subjects
             </Button>
           </Stack>
-          <Typography variant="h5" sx={{ p: 2 }}>
-              Subject Details : {subject?.name}
-            </Typography>
-          <TableContainer component={Paper} sx={{ mt: 3 }}>
-            {/* Back Button */}
 
+          <TableContainer component={Paper} sx={{ mt: 3 }}>
             
+
             <Table sx={{ borderCollapse: "collapse" }}>
               <TableBody>
                 {/* Row 1 */}
@@ -168,7 +168,15 @@ export default function SubjectDetailsTable() {
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell sx={{fontWeight:"bold" , fontSize:"18px" ,textDecoration:"underline"}}>Summer Information</TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: "18px",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    Summer Information
+                  </TableCell>
                 </TableRow>
                 {/* Row 8 */}
                 <TableRow>
@@ -214,8 +222,7 @@ export default function SubjectDetailsTable() {
               </TableBody>
             </Table>
           </TableContainer>
-      <DisplaySubjectRoles/>
-
+          <DisplaySubjectRoles />
         </CardContent>
       </Card>
     </Box>
