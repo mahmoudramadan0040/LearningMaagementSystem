@@ -181,19 +181,17 @@ export default function SubjectsPage() {
                 }}
                 disableRowSelectionOnClick
                 sx={{
-                  border: "1px solid grey.300",
+                  // border: "1px solid grey.300",
 
-                  borderColor: "divider", // theme divider color
+                  // borderColor: "divider", // theme divider color
                   "& .MuiDataGrid-cell": {
-                    borderBottom: "1px solid #e0e0e0", // border between rows
-                    borderRight: "1px solid #e0e0e0", // vertical cell borders
+                    
+                    border:"1px solid #e0e0e0"
                   },
-                  "& .MuiDataGrid-columnHeaders": {
-                    border: "1px solid #e0e0e0", // header bottom border
-                  },
-                  "& .MuiDataGrid-row:hover": {
-                    backgroundColor: "#f5f5f5",
-                  },
+                  // "& .MuiDataGrid-columnHeaders": {
+                  //   border: "1px solid #e0e0e0", // header bottom border
+                  // },
+                  
                 }}
               />
             </CardContent>

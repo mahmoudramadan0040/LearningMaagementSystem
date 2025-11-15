@@ -1,10 +1,11 @@
 "use client";
 import { baselightTheme } from "@/utils/theme/DefaultColors";
-import { ThemeProvider } from "@mui/material/styles";
+// import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import "./global.css";
 import { Provider } from "react-redux";
 import { store } from "@/store";
+import { AppThemeProvider } from "@/providers/AppThemeProvider";
 
 export default function RootLayout({
   children,
@@ -15,11 +16,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Provider store={store}>
-          <ThemeProvider theme={baselightTheme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            {children}
-          </ThemeProvider>
+          {/* <ThemeProvider theme={baselightTheme}> */}
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          {/* <CssBaseline /> */}
+          <AppThemeProvider>{children}</AppThemeProvider>
+
+          {/* </ThemeProvider> */}
         </Provider>
       </body>
     </html>

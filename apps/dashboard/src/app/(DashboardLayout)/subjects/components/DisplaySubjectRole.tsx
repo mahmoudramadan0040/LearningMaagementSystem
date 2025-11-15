@@ -81,7 +81,7 @@ export default function DisplaySubjectRoles() {
                 "& td, & th": { border: "1px solid black", padding: "8px" },
               }}
             >
-              <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+              <TableHead >
                 <TableRow>
                   <TableCell align="center" sx={{ fontWeight: "bold" }}>
                     Symbol

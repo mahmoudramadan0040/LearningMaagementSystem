@@ -6,10 +6,11 @@ import { departmentsApi } from "./services/departmentsApi";
 import { examSessionsApi } from "./services/examSessionsApi";
 import { subjectsApi } from "./services/subjectApi";
 import { subjectRoleApi } from "./services/subject_roleApi";
-
+import themeReducer from "./slices/themeSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    theme: themeReducer,
     [authApi.reducerPath]: authApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [departmentsApi.reducerPath]: departmentsApi.reducer,
