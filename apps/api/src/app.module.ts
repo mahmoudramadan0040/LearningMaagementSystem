@@ -13,6 +13,7 @@ import { FileManagementModule } from './file_management/file_management.module';
 import { SubjectMaterialsModule } from './subject_materials/subject_materials.module';
 import { SubjectRoleModule } from './subject_role/subject_role.module';
 import { ExamSessionModule } from './exam_session/exam_session.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ExamSessionModule } from './exam_session/exam_session.module';
     SubjectMaterialsModule,
     SubjectRoleModule,
     ExamSessionModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
