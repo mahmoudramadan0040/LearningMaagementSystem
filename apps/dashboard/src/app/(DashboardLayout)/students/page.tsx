@@ -47,7 +47,7 @@ export default function StudentsPage() {
         + Add Student
       </Button>
 
-      <Paper sx={{ height: 500 }}>
+      <Paper sx={{ height: "80%" }}>
         <DataGrid
           rows={students}
           columns={columns}
@@ -55,6 +55,7 @@ export default function StudentsPage() {
           getRowId={(row) => row.id}
         />
       </Paper>
+      
     </Box>
   );
 }

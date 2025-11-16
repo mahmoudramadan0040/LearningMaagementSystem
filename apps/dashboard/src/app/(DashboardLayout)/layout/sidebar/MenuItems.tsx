@@ -54,13 +54,13 @@ const Menuitems = [
       {
         id: uniqueId(),
         title: "Add Students",
-        href: "/students/add",
+        href: "/students/student/create",
         icon: IconUserPlus,
       },
       {
         id: uniqueId(),
         title: "Remove Students",
-        href: "/students/delete",
+        href: "/students/student/delete",
         icon: IconUserOff,
       },
     ],
