@@ -12,7 +12,7 @@
     "**/.git": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/*.log": true,
+    "**/*.log": false,
     "**/.env.local": true,
     "**/.env.*.local": true,
     "**/coverage": true,

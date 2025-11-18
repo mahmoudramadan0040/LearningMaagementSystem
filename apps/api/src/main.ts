@@ -10,13 +10,20 @@ import {
 } from '@nestjs/platform-fastify';
 import { join } from 'path';
 import fastifyStatic from '@fastify/static';
+import { appLogger } from './common/logger/winston-logger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
-
+  app.useLogger({
+    log: (message) => appLogger.info(message),
+    error: (message) => appLogger.error(message),
+    warn: (message) => appLogger.warn(message),
+    debug: (message) => appLogger.debug(message),
+    verbose: (message) => appLogger.verbose(message),
+  });
   const config = new DocumentBuilder()
     .setTitle('Learning Management System API')
     .setDescription('API documentation')

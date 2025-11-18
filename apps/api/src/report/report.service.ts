@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
+import { InjectConnection, InjectModel } from '@nestjs/sequelize';
 import { Op, Sequelize } from 'sequelize';
 import { ReportQueryDto } from './dto/report-query.dto';
 import { ReportConfig } from './interfaces/report-config.interface';
 
 @Injectable()
 export class ReportService {
-  constructor(private readonly sequelize: Sequelize) {}
-
+  constructor(@InjectConnection() private readonly sequelize: Sequelize) {}
   private getRepository(model: any) {
     // Use sequelize.model() to retrieve a model by name or pass the model class directly.
     // Adjust implementation for your app's setup.

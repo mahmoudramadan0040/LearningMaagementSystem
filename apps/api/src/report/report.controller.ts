@@ -7,10 +7,7 @@ export class ReportController {
   constructor(private readonly reportService: ReportService) {}
 
   
-  @Get()
-  async Final(){
-    console.log();
-  }
+  
   
 
   

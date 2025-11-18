@@ -16,5 +16,6 @@ import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
   ],
   controllers: [ReportController],
   providers: [ReportService],
+
 })
 export class ReportModule {}

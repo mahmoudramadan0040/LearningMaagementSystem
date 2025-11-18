@@ -10,6 +10,7 @@ import { FileManagement } from 'src/file_management/entities/file_management.ent
 import { SubjectMaterial } from 'src/subject_materials/entities/subject_material.entity';
 import { SubjectRole } from 'src/subject_role/entities/subject_role.entity';
 import { ExamSession } from 'src/exam_session/entities/exam_session.entity';
+import { appLogger } from 'src/common/logger/winston-logger';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), // load .env globally
@@ -34,6 +35,7 @@ import { ExamSession } from 'src/exam_session/entities/exam_session.entity';
           SubjectRole,
           ExamSession
         ],
+        logging: (msg) => appLogger.info(`SQL: ${msg}`),
         autoLoadModels: true,
         synchronize: false,
         sync: { force: false },
