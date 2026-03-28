@@ -5,13 +5,12 @@ import {
   DataType,
   PrimaryKey,
   Default,
-  ForeignKey,
-  BelongsTo,
   BelongsToMany,
-  HasOne,
   HasMany,
 } from 'sequelize-typescript';
+import { ExamSessionSubject } from 'src/exam_session_subject/entities/exam_session_subject.entity';
 import { Grade } from 'src/grade/entities/grade.entity';
+import { Subject } from 'src/subject/entities/subject.entity';
 
 @Table({
   tableName: 'ExamSession',
@@ -25,7 +24,6 @@ export class ExamSession extends Model<ExamSession> {
   })
   declare id: string; // string instead of number
 
-
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -36,9 +34,17 @@ export class ExamSession extends Model<ExamSession> {
     type: DataType.STRING,
     allowNull: false,
   })
-  academicYear: string; 
+  academicYear: string;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  })
+  IsChangeStateOfStudent: boolean;
 
   @HasMany(() => Grade)
   grades: Grade[];
 
+  @BelongsToMany(() => Subject, () => ExamSessionSubject)
+  subjects: Subject[];
 }

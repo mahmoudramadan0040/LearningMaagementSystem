@@ -1,0 +1,22 @@
+{
+    "menu": {
+      "menu": "Menu",
+      "others": "Others",
+      "dashboard": "Dashboard",
+      "calendar": "Calendar",
+      "profile": "Profile",
+      "forms": "Forms",
+      "tables": "Tables",
+      "settings": "Settings",
+      "chart": "Chart",
+      "uiElements": "UI Elements",
+      "authentication": "Authentication",
+      "formElements": "Form Elements",
+      "formLayout": "Form Layout",
+      "alerts": "Alerts",
+      "buttons": "Buttons",
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "ecommerce": "eCommerce"
+    }
+}

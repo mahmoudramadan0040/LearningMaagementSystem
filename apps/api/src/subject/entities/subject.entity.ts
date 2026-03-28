@@ -11,6 +11,8 @@ import {
   HasOne,
 } from 'sequelize-typescript';
 import { Department } from 'src/department/entities/department.entity';
+import { ExamSession } from 'src/exam_session/entities/exam_session.entity';
+import { ExamSessionSubject } from 'src/exam_session_subject/entities/exam_session_subject.entity';
 import { SubjectMaterial } from 'src/subject_materials/entities/subject_material.entity';
 import { UserSubject } from 'src/user-subject/entities/user-subject.entity';
 import { User } from 'src/users/entities/user.entity';
@@ -148,4 +150,7 @@ export class Subject extends Model<Subject> {
 
   @HasOne(() => SubjectMaterial)
   material: SubjectMaterial;
+
+  @BelongsToMany(() => ExamSession,() => ExamSessionSubject )
+  examSessions: ExamSession[];
 }

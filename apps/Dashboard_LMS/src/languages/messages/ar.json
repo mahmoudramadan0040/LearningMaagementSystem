@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "menu": "القائمة",
+    "others": "أخرى",
+    "dashboard": "لوحة التحكم",
+    "Departments":"الاقسام",
+    "Subjects":"المواد الدراسية",
+    "Students":"الطلاب",
+    "calendar": "التقويم",
+    "profile": "الملف الشخصي",
+    "forms": "النماذج",
+    "tables": "الجداول",
+    "settings": "الإعدادات",
+    "chart": "الرسم البياني",
+    "uiElements": "عناصر الواجهة",
+    "authentication": "المصادقة",
+    "formElements": "عناصر النموذج",
+    "formLayout": "تصميم النموذج",
+    "alerts": "تنبيهات",
+    "buttons": "أزرار",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "ecommerce": "التجارة الإلكترونية"
+  }
+}

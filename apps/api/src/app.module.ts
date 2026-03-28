@@ -15,6 +15,8 @@ import { SubjectRoleModule } from './subject_role/subject_role.module';
 import { ExamSessionModule } from './exam_session/exam_session.module';
 import { ReportModule } from './report/report.module';
 
+import { ExamSessionSubjectModule } from './exam_session_subject/exam_session_subject.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }), // load .env globally
@@ -30,6 +32,7 @@ import { ReportModule } from './report/report.module';
     SubjectRoleModule,
     ExamSessionModule,
     ReportModule,
+    ExamSessionSubjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
