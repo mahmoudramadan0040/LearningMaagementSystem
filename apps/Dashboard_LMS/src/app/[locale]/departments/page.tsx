@@ -17,6 +17,8 @@ import EditSquareIcon from "@mui/icons-material/EditSquare";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { GridColDef, GridRenderCellParams, DataGrid } from "@mui/x-data-grid";
+import { useLocale } from "next-intl";
+
 
 import {
   useListDepartmentsQuery,
@@ -36,6 +38,7 @@ type FormState = {
 
 export default function DepartmentsPage() {
   const router = useRouter();
+
   // Queries & mutations
   const { data, isLoading, isFetching, isError, refetch } =
     useListDepartmentsQuery();
@@ -83,7 +86,6 @@ export default function DepartmentsPage() {
   };
 
   const onSubmitData = async (form: FormState) => {
-    console.log("hellow");
     const v = validate(form);
     setErrors(v);
     if (Object.keys(v).length > 0) return;
@@ -131,7 +133,7 @@ export default function DepartmentsPage() {
             <IconButton
               size="small"
               onClick={() =>
-                router.push(`/departments/department/${params.row.id}`)
+                router.push(`departments/department/${params.row.id}`)
               }
             >
               <RemoveRedEyeIcon fontSize="small" />
@@ -184,6 +186,7 @@ export default function DepartmentsPage() {
                 startIcon={<AddOutlinedIcon />}
                 variant="contained"
                 onClick={handleOpenCreate}
+                
               >
                 New Department
               </Button>
@@ -218,21 +221,7 @@ export default function DepartmentsPage() {
                       },
                     }}
                     disableRowSelectionOnClick
-                    // sx={{
-                    //   border: "1px solid grey.300",
-
-                    //   borderColor: "divider", // theme divider color
-                    //   "& .MuiDataGrid-cell": {
-                    //     borderBottom: "1px solid #e0e0e0", // border between rows
-                    //     borderRight: "1px solid #e0e0e0", // vertical cell borders
-                    //   },
-                    //   "& .MuiDataGrid-columnHeaders": {
-                    //     border: "1px solid #e0e0e0", // header bottom border
-                    //   },
-                    //   "& .MuiDataGrid-row:hover": {
-                    //     backgroundColor: "#f5f5f5",
-                    //   },
-                    // }}
+                    
                   />
                 )}
               </CardContent>

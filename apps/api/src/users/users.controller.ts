@@ -42,6 +42,7 @@ export class UsersController {
     schema: {
       example: {
         name: 'Ahmed Hassan',
+        name_ar:"احمد حسن ",
         student_id: 'STU20251021',
         password: 'Ahm3d@123',
         username: 'ahmed_hassan',
@@ -53,6 +54,7 @@ export class UsersController {
         role: 'Student',
         level_status: 'Active',
         level: 3,
+        level_name:"First",
         Graduated: false,
       },
     },

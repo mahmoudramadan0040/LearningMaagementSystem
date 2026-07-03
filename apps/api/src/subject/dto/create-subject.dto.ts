@@ -1,4 +1,14 @@
-import { IsString, IsNotEmpty, IsUUID, IsInt, IsBoolean, IsEnum, Min, Max, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsUUID,
+  IsInt,
+  IsBoolean,
+  IsEnum,
+  Min,
+  Max,
+  IsOptional,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { GradeType } from '../entities/subject.entity';
 export class CreateSubjectDto {
@@ -6,7 +16,10 @@ export class CreateSubjectDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-
+  @ApiProperty({ example: 'ماث' })
+  @IsString()
+  @IsNotEmpty()
+  name_ar: string;
   @ApiProperty({ example: 'MATH101' })
   @IsString()
   @IsNotEmpty()
@@ -59,7 +72,7 @@ export class CreateSubjectDto {
   grade_type: GradeType;
   @ApiProperty({ example: 3 })
   @IsInt()
-  creditHours
+  creditHours;
 
   @ApiProperty({ example: 50 })
   @IsInt()

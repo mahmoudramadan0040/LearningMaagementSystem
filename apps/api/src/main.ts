@@ -11,6 +11,7 @@ import {
 import { join } from 'path';
 import fastifyStatic from '@fastify/static';
 import { appLogger } from './common/logger/winston-logger';
+import fastifyHelmet from '@fastify/helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -43,9 +44,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  
   await app.register(multipart);
-
+  await app.register(fastifyHelmet, {
+    contentSecurityPolicy: false,
+  });
   await app.register(fastifyStatic, {
     root: join(__dirname, '..', 'uploads'),
     prefix: '/uploads/',
@@ -53,7 +55,7 @@ async function bootstrap() {
   await app.register(cors, {
     origin: 'http://localhost:3000', // allow your Next.js frontend
     credentials: true, // allow cookies/auth headers if needed
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'], // optional
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'], // optional
     allowedHeaders: ['Content-Type', 'Authorization'], // optional
   });
   app.useGlobalPipes(

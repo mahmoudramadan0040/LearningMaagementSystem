@@ -33,7 +33,8 @@ export class SubjectRole extends Model<SubjectRole> {
 
   @Column({ type: DataType.STRING(10), allowNull: false })
   symbol: string; // e.g., A, A-, B+
-
+  @Column({ type: DataType.STRING(10), allowNull: false })
+  symbol_ar: string; // e.g., A, A-, B+
   @Column({ type: DataType.DOUBLE, allowNull: true })
   minPercentage: number; // e.g., 85
 

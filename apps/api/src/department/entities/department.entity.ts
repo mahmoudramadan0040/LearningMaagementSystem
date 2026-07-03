@@ -1,7 +1,7 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
 import { Subject } from 'src/subject/entities/subject.entity';
 import { User } from 'src/users/entities/user.entity';
-@Table({ tableName: 'departments',timestamps:true })
+@Table({ tableName: 'departments', timestamps: true })
 export class Department extends Model<Department> {
   @Column({
     type: DataType.UUID,
@@ -15,13 +15,22 @@ export class Department extends Model<Department> {
     allowNull: false,
   })
   name: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  ar_name: string;
 
   @Column({
     type: DataType.STRING,
-    allowNull:false,
+    allowNull: false,
   })
-  Faculty:string;
-
+  Faculty: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  ar_Faculty: string;
 
   // Department has many Users
   @HasMany(() => User)
@@ -29,6 +38,4 @@ export class Department extends Model<Department> {
   // Department has many Users
   @HasMany(() => Subject)
   subjects: Subject[];
-
-
 }

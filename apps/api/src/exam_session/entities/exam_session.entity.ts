@@ -29,6 +29,11 @@ export class ExamSession extends Model<ExamSession> {
     allowNull: false,
   })
   name: string; // يناير، مايو، سبتمبر...
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  ar_name: string; // يناير، مايو، سبتمبر...
 
   @Column({
     type: DataType.STRING,

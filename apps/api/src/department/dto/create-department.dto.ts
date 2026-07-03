@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateDepartmentDto {
   @ApiProperty({
@@ -9,6 +9,9 @@ export class CreateDepartmentDto {
   @IsNotEmpty()
   @IsString()
   name: string;
+  @IsNotEmpty()
+  @IsString()
+  name_ar: string;
 
   @ApiProperty({
     example: 'Industry and energy Faculty',
@@ -17,4 +20,11 @@ export class CreateDepartmentDto {
   @IsNotEmpty()
   @IsString()
   Faculty: string;
+  @ApiProperty({
+    example: 'Industry and energy Faculty',
+    description: 'Faculty to which the department belongs',
+  })
+  @IsNotEmpty()
+  @IsString()
+  Faculty_ar: string;
 }

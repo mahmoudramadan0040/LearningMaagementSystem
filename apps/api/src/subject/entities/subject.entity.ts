@@ -38,7 +38,11 @@ export class Subject extends Model<Subject> {
     allowNull: false,
   })
   name: string;
-
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  name_ar: string;
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -56,7 +60,7 @@ export class Subject extends Model<Subject> {
     type: DataType.BOOLEAN,
     allowNull: false,
   })
-  IsCalulated:Boolean;
+  IsCalulated: Boolean;
 
   @Column({
     type: DataType.INTEGER,
@@ -128,7 +132,7 @@ export class Subject extends Model<Subject> {
     allowNull: false,
   })
   creditHours: number;
-  // relation between user and department 
+  // relation between user and department
   // Foreign key
   @ForeignKey(() => Department)
   @Column({
@@ -137,13 +141,12 @@ export class Subject extends Model<Subject> {
   })
   departmentId: string;
 
-
   // Relation
-  @BelongsTo(() => Department,{
-    onDelete: 'SET NULL'
+  @BelongsTo(() => Department, {
+    onDelete: 'SET NULL',
   })
   department: Department;
-  
+
   // Many-to-Many relation with User
   @BelongsToMany(() => User, () => UserSubject)
   users: User[];
@@ -151,6 +154,6 @@ export class Subject extends Model<Subject> {
   @HasOne(() => SubjectMaterial)
   material: SubjectMaterial;
 
-  @BelongsToMany(() => ExamSession,() => ExamSessionSubject )
+  @BelongsToMany(() => ExamSession, () => ExamSessionSubject)
   examSessions: ExamSession[];
 }

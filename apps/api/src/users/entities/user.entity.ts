@@ -20,10 +20,10 @@ import { Exclude } from 'class-transformer';
 export enum UserRole {
   STUDENT = 'Student',
   TEACHING_ASSISTANT = 'Teaching_Assistant',
-  DOCTOR='Doctor',
-  ADMIN = "Admin",
-  MANAGER='Manager',
-  STUDENT_AFFAIRS_OFFICER='Student_Affairs_Officer'
+  DOCTOR = 'Doctor',
+  ADMIN = 'Admin',
+  MANAGER = 'Manager',
+  STUDENT_AFFAIRS_OFFICER = 'Student_Affairs_Officer',
 }
 
 @Table({
@@ -47,6 +47,11 @@ export class User extends Model<User> {
     type: DataType.STRING,
     allowNull: false,
   })
+  name_ar: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
   email: string;
   @Column({
     type: DataType.STRING,
@@ -57,7 +62,6 @@ export class User extends Model<User> {
     type: DataType.STRING,
     allowNull: false,
   })
-
   password: string;
   @Column({
     type: DataType.STRING,
@@ -113,7 +117,11 @@ export class User extends Model<User> {
     allowNull: true,
   })
   level: Number;
-
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  level_name: Number;
   @Column({
     type: DataType.BOOLEAN,
     allowNull: true,
@@ -128,7 +136,6 @@ export class User extends Model<User> {
   })
   unique_id: string;
 
-  
   // relation between user and department
   // Foreign key
   @ForeignKey(() => Department)
@@ -147,6 +154,4 @@ export class User extends Model<User> {
 
   @Column({ type: DataType.STRING, allowNull: true })
   profileImage: string | null;
-
-
 }

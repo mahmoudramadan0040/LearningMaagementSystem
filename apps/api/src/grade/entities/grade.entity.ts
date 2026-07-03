@@ -42,7 +42,11 @@ export class Grade extends Model<Grade> {
     allowNull: true,
   })
   grade: string;
-
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  grade_ar: string;
   @ForeignKey(() => User)
   @Column(DataType.UUID)
   userId: string;

@@ -1,0 +1,45 @@
+========================================================================
+                    Learning Management System Requirement 
+========================================================================
+# -------Management Departments ------- #
+- create  [Done]
+- read    [Done]
+- update  [Done]
+- delete  [Done]
+
+# Report of Department 
+- show all subjects in department 
+- show all student in department 
+- show number of student graduated form this department 
+- show all students confilect with subjects 
+------------------------------------------------------------------------
+# -------Management Subjects ------- #
+- create            [Done]
+- read all Subjects [Done]
+- read one Subject  [Done]
+- update 
+- delete 
+- add student
+- delete student 
+
+# Report of Subjects  
+- show all student that enroll in Subjects 
+- show report of passed and failed student of this subject based on semester
+- show student passed form this subject 
+- show student failed from this subject
+- show students confilected with subject
+------------------------------------------------------------------------
+# -------Management Students ------- #
+- create 
+- read 
+- search
+- update 
+- delete 
+- add student
+- delete student 
+- update status of Student 
+
+
+# Report of students  
+- show and print student transcript ( report of all subject that enrolled )
+- show 

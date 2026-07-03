@@ -18,6 +18,9 @@ export class CreateGradeDto {
 
   @IsString()
   grade?: string;
+  @IsString()
+  grade_ar?: string;
+
 
   @IsUUID()
   @IsNotEmpty()

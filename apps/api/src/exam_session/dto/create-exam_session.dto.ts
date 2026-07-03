@@ -9,6 +9,9 @@ export class CreateExamSessionDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+  @IsString()
+  @IsNotEmpty()
+  name_ar: string;
 
   @ApiProperty({
     example: '2024/2025',

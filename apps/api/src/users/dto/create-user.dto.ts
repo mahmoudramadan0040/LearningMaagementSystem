@@ -10,11 +10,13 @@ import {
 import { UserRole } from '../entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-
 export class CreateUserDto {
   @ApiProperty()
   @IsString()
   name: string;
+  @ApiProperty()
+  @IsString()
+  name_ar: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -68,7 +70,10 @@ export class CreateUserDto {
   @IsOptional()
   @IsNumber()
   level?: number;
-
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  level_name?: number;
   @ApiProperty({ required: false })
   @IsOptional()
   @IsBoolean()
