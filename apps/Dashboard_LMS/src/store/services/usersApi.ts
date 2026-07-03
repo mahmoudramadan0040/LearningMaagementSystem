@@ -50,7 +50,11 @@ export interface CreateUserDto {
   level_name?: string;
   Graduated?: boolean;
 }
-
+export interface SearchUserQuery {
+  search: string;
+  page:number;
+  limit:number
+}
 export type UpdateUserDto = Partial<CreateUserDto>;
 export interface PaginatedUsersResponse {
   data: User[];
@@ -70,7 +74,6 @@ export const usersApi = createApi({
 
   endpoints: (builder) => ({
     listUsers: builder.query<PaginatedUsersResponse, PaginationQuery>({
-      
       query: ({ page = 1, limit = 10 }) => ({
         url: `/users?page=${page}&limit=${limit}`,
       }),
@@ -86,7 +89,27 @@ export const usersApi = createApi({
             ]
           : [{ type: "Users", id: "LIST" }],
     }),
+    searchUsers: builder.query<PaginatedUsersResponse, SearchUserQuery>({
+      query: ({ search, page = 1, limit = 10 }) => ({
+        url: "/users/search",
+        params: {
+          search,
+          page,
+          limit,
+        },
+      }),
 
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map((user) => ({
+                type: "Users" as const,
+                id: user.id,
+              })),
+              { type: "Users", id: "LIST" },
+            ]
+          : [{ type: "Users", id: "LIST" }],
+    }),
     getUser: builder.query<User, string>({
       query: (id) => ({
         url: `/users/${id}`,
@@ -137,6 +160,7 @@ export const usersApi = createApi({
 export const {
   useListUsersQuery,
   useGetUserQuery,
+  useSearchUsersQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,

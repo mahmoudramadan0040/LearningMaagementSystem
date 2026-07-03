@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useListUsersQuery, useDeleteUserMutation } from "../../../store/services/usersApi";
+import { useListUsersQuery, useDeleteUserMutation } from "../../../../store/services/usersApi";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box, Button, IconButton, Typography, Paper } from "@mui/material";
 import { IconTrash, IconEdit } from "@tabler/icons-react";

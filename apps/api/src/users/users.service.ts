@@ -12,7 +12,6 @@ import { Sequelize } from 'sequelize-typescript';
 import { Op } from 'sequelize';
 import * as bcrypt from 'bcryptjs';
 
-
 @Injectable()
 export class UsersService {
   constructor(
@@ -22,7 +21,7 @@ export class UsersService {
   ) {}
 
   // create
-  async create(createUserDto: CreateUserDto): Promise<User|any> {
+  async create(createUserDto: CreateUserDto): Promise<User | any> {
     const existingUser = await this.userRepository.findOne({
       where: {
         [Op.or]: [
@@ -39,8 +38,10 @@ export class UsersService {
       createUserDto.password as string,
       10,
     );
-    let {password ,refreshToken,...result}= (await this.userRepository.create(createUserDto as any)).dataValues;
-    
+    let { password, refreshToken, ...result } = (
+      await this.userRepository.create(createUserDto as any)
+    ).dataValues;
+
     return result;
   }
   // get all users
@@ -67,8 +68,66 @@ export class UsersService {
       include: { all: true },
     });
     if (!user) throw new NotFoundException(`User with Id "${id}" not found !`);
-    
+
     return user;
+  }
+
+  async search(search: string, page = 1, limit = 10) {
+    const offset = (page - 1) * limit;
+
+    const { rows, count } = await this.userRepository.findAndCountAll({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            name_ar: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            username: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            email: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            student_id: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            national_id: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+          {
+            phone: {
+              [Op.iLike]: `%${search}%`,
+            },
+          },
+        ],
+      },
+      include: { all: true },
+      limit,
+      offset,
+      order: [['createdAt', 'DESC']], // optional
+    });
+
+    return {
+      data: rows,
+      total: count,
+      page,
+      limit,
+      totalPages: Math.ceil(count / limit),
+    };
   }
   // update signle user
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | any> {

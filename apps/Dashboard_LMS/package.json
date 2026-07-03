@@ -27,7 +27,8 @@
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18",
     "react-redux": "^9.2.0",
-    "tailwindcss-rtl": "^0.9.0"
+    "tailwindcss-rtl": "^0.9.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/node": "^20",
