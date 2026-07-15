@@ -1,54 +1,139 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setAccessToken, logout } from "../slices/authSlice";
+// src/services/authApi.ts
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL,
-  prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as any).auth.accessToken;
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
-    return headers;
-  },
-  credentials: "include", // to send cookies (for refresh token)
-});
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { 
+  LoginCredentials, 
+  RegisterData, 
+  AuthResponse, 
+  User 
+} from '@/types/auth';
 
-const baseQueryWithReauth: typeof baseQuery = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
-
-  if (result.error && (result.error.status === 401 || result.error.status === 403)) {
-    // try refresh
-    const refreshResult = await baseQuery("/auth/refresh", api, extraOptions);
-    if (refreshResult.data) {
-      const newToken = (refreshResult.data as any).accessToken;
-      api.dispatch(setAccessToken(newToken));
-
-      // retry original request
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      api.dispatch(logout());
-      if (typeof window !== "undefined") window.location.href = "/login";
-    }
-  }
-
-  return result;
-};
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export const authApi = createApi({
-  reducerPath: "authApi",
-  baseQuery: baseQueryWithReauth,
+  reducerPath: 'authApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders: (headers, { getState }) => {
+      // Get token from state
+      const state = getState() as any;
+      const token = state.auth?.tokens?.accessToken;
+      
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
+
+  // Tag types for cache invalidation
+  tagTypes: ['Auth', 'User'],
+
   endpoints: (builder) => ({
-    login: builder.mutation({
+    // Login
+    login: builder.mutation<AuthResponse, LoginCredentials>({
       query: (credentials) => ({
-        url: "/auth/login",
-        method: "POST",
+        url: '/auth/login',
+        method: 'POST',
         body: credentials,
       }),
+      invalidatesTags: ['Auth'],
     }),
-    getProfile: builder.query({
-      query: () => "/auth/profile",
+
+    // Register
+    register: builder.mutation<AuthResponse, RegisterData>({
+      query: (data) => ({
+        url: '/auth/register',
+        method: 'POST',
+        body: {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        },
+      }),
+      invalidatesTags: ['Auth'],
+    }),
+
+    // Logout
+    logout: builder.mutation<void, string>({
+      query: (refreshToken) => ({
+        url: '/auth/logout',
+        method: 'POST',
+        body: { refreshToken },
+      }),
+      invalidatesTags: ['Auth', 'User'],
+    }),
+
+    // Refresh Token
+    refreshToken: builder.mutation<AuthResponse, string>({
+      query: (refreshToken) => ({
+        url: '/auth/refresh',
+        method: 'POST',
+        body: { refreshToken },
+      }),
+    }),
+
+    // Get Profile
+    getProfile: builder.query<User, void>({
+      query: () => '/auth/profile',
+      providesTags: ['User'],
+    }),
+
+    // Update Profile
+    updateProfile: builder.mutation<User, Partial<User>>({
+      query: (data) => ({
+        url: '/auth/profile',
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['User'],
+    }),
+
+    // Change Password
+    changePassword: builder.mutation<
+      void, 
+      { currentPassword: string; newPassword: string }
+    >({
+      query: (data) => ({
+        url: '/auth/change-password',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    // Forgot Password
+    forgotPassword: builder.mutation<void, string>({
+      query: (email) => ({
+        url: '/auth/forgot-password',
+        method: 'POST',
+        body: { email },
+      }),
+    }),
+
+    // Reset Password
+    resetPassword: builder.mutation<
+      void, 
+      { token: string; password: string }
+    >({
+      query: (data) => ({
+        url: '/auth/reset-password',
+        method: 'POST',
+        body: data,
+      }),
     }),
   }),
 });
 
-export const { useLoginMutation, useGetProfileQuery } = authApi;
+// Export hooks for usage in components
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
+  useRefreshTokenMutation,
+  useGetProfileQuery,
+  useLazyGetProfileQuery,
+  useUpdateProfileMutation,
+  useChangePasswordMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+} = authApi;
